@@ -6,7 +6,7 @@
 #    By: khou <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/22 18:08:35 by khou              #+#    #+#              #
-#    Updated: 2018/08/31 17:32:48 by khou             ###   ########.fr        #
+#    Updated: 2018/08/31 17:39:03 by khou             ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -53,6 +53,7 @@ fclean:
 	@rm -f include/\#*\#
 	@rm -f srcs/*~
 	@rm -f srcs/\#*\#
+	@rm -f srcs/.#*
 	@rm -f a.out
 	@rm -rf *dSYM
 	@make fclean -C libft
