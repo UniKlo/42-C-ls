@@ -6,7 +6,7 @@
 #    By: khou <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/22 18:08:35 by khou              #+#    #+#              #
-#    Updated: 2018/08/31 17:39:03 by khou             ###   ########.fr        #
+#    Updated: 2018/09/04 01:37:59 by khou             ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -14,7 +14,7 @@ C = clang
 
 NAME = ft_ls
 
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 
 DIR_S = srcs
 
@@ -24,14 +24,15 @@ HEADER = -I include
 
 SOURCES = main.c \
 		operate.c\
+		plong.c\
+		sorting.c\
 
 SRCS = $(addprefix $(DIR_S)/, $(SOURCES))
 
 all: $(NAME)
 
-LIBFT: @make -C libft
-
-$(NAME): $(SRCS) $(LIBFT)
+$(NAME): $(SRCS)
+	@make -C libft/
 	@$(CC) libft/libft.a $(HEADER) $(FLAGS) $(SRCS) -o $(NAME)
 
 norme:
@@ -45,7 +46,7 @@ clean:
 	@make clean -C libft
 	@echo "cleaned up objects"
 
-fclean:
+fclean: clean
 	@rm -f $(NAME)
 	@rm -f *~
 	@rm -f \#*\#

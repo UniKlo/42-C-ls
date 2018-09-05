@@ -5,6 +5,12 @@ or error message
 test: ./ft_ls -a
 ./ft_ls /dev srcs -l
 ./ft_ls -a /dev -l libft
-
-
+./ft_ls -l /tmp for "l-----s---"
+./ft_ls -l /bin/ps -----s---"
 if flag is repeting, do it once
+
+
+./ft_ls -l srcs Makefile #print file first then dir#
+
+
+handle / root
