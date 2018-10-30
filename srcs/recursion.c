@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/06 14:10:15 by khou              #+#    #+#             */
-/*   Updated: 2018/09/06 16:53:50 by khou             ###   ########.fr       */
+/*   Updated: 2018/10/29 20:25:26 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,3 +21,11 @@ or reverse
 
 3. (if there is not subdir it should go to next dir in tree)
 */
+
+void	pull_info(t-ls *ls)
+{
+	if (ls->fi != 0)
+		stage4tree();
+	if (ls->di != 0)
+		stage4tree();
+}

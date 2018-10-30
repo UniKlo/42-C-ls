@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:55:09 by khou              #+#    #+#             */
-/*   Updated: 2018/10/28 03:47:23 by khou             ###   ########.fr       */
+/*   Updated: 2018/10/29 20:11:14 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ int 	main(int argc, char **argv)
 	t_lsflags	store;
 	t_ls	ls;
 	
-//	char		*tmp;
-
 	argc = 0;
 	while (argv[i] && argv[i][0] == '-')
 	{
@@ -104,8 +102,6 @@ int 	main(int argc, char **argv)
 			store.pcurrent = false;
 //			if (argv[i][strlen(argv[i-1])] != '/')
 //				argv[i] = ft_strjoin(argv[i], "/");
-
-//			operate(&store, argv[i]); //send out path name
 			f_or_d(&ls, argv[i]);
 //			free(argv[i]);
 		}
@@ -115,7 +111,7 @@ int 	main(int argc, char **argv)
 	}
 	ft_printf("store.pcurrent: %d\n", store.pcurrent);
 	ft_printf("nub of files: %d\n", ls.fi); 
-/*
+/* print out the list as it is
 	int a = 0;
 	while (a < ls.fi)
 	{
@@ -124,7 +120,6 @@ int 	main(int argc, char **argv)
 	}
 */
 	t_node *tree = newNode(0, ls.fil[0]);
-//	tree->fullpath = ls.fil[0];
     int a = 1;
     while (a < ls.fi)
     {
