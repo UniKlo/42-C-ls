@@ -14,3 +14,7 @@ if flag is repeting, do it once
 
 
 handle / root
+chomd sticky bits
+chomd 000 for no authoriation
+
+lstat to tele whether it is a dir

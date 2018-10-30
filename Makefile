@@ -6,7 +6,7 @@
 #    By: khou <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/22 18:08:35 by khou              #+#    #+#              #
-#    Updated: 2018/09/04 01:37:59 by khou             ###   ########.fr        #
+#    Updated: 2018/10/29 18:21:09 by khou             ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -14,7 +14,7 @@ C = clang
 
 NAME = ft_ls
 
-FLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+FLAGS = -Wall -Wextra -Werror -fsanitize=address #-g
 
 DIR_S = srcs
 
@@ -25,7 +25,7 @@ HEADER = -I include
 SOURCES = main.c \
 		operate.c\
 		plong.c\
-		sorting.c\
+		f_or_d.c\
 
 SRCS = $(addprefix $(DIR_S)/, $(SOURCES))
 
@@ -33,7 +33,7 @@ all: $(NAME)
 
 $(NAME): $(SRCS)
 	@make -C libft/
-	@$(CC) libft/libft.a $(HEADER) $(FLAGS) $(SRCS) -o $(NAME)
+	@$(C) libft/libft.a $(HEADER) $(FLAGS) $(SRCS) -o $(NAME)
 
 norme:
 	norminette ./libft/
