@@ -71,5 +71,5 @@ void	operate(t_lsflags *store, char *path);
 void    plong(char *readinto, struct stat *sb);
 //void    sorting(t_lsflags *store, char *path, struct stat *sb);
 void	f_or_d(t_ls *ls, char *path);
-
+void	cmd_sort(t_ls *ls);
 #endif

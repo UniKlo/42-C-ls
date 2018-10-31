@@ -26,6 +26,7 @@ SOURCES = main.c \
 		operate.c\
 		plong.c\
 		f_or_d.c\
+		sort.c
 
 SRCS = $(addprefix $(DIR_S)/, $(SOURCES))
 
@@ -34,6 +35,7 @@ all: $(NAME)
 $(NAME): $(SRCS)
 	@make -C libft/
 	@$(C) libft/libft.a $(HEADER) $(FLAGS) $(SRCS) -o $(NAME)
+	@echo "\033[32mBinary \033[1;32m$(NAME)\033[1;0m\033[32m created.\033[0m"
 
 norme:
 	norminette ./libft/

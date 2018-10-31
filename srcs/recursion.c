@@ -24,8 +24,7 @@ or reverse
 
 void	pull_info(t-ls *ls)
 {
-	if (ls->fi != 0)
-		stage4tree();
-	if (ls->di != 0)
-		stage4tree();
+  struct stat	sb;
+  if (ls->fi != 0)
+    stage4tree();
 }

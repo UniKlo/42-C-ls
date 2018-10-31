@@ -27,59 +27,6 @@ void	ls_init(t_ls *ls)
 	ls->di = 0;
 }
 
-t_node  *newNode(struct stat *sb, char *fullpath) //??
-{
-    t_node   *node;
-
-	sb = 0;
-    node = (t_node*)malloc(sizeof(t_node));
-    node->fullpath = fullpath;
-	//   node->mtime = sb->st_mtimespec;//??
-    node->left = NULL;
-    node->right = NULL;
-    return (node);
-}
-
-
-//add function pointer argument for comparison
-void    insert(t_node *tree, char  *path)
-{
-	t_node *new;
-	
-	if (ft_strcmp(tree->fullpath, path) > 0)
-	{
-		if (!tree->left)
-		{
-			new = newNode(0, path);
-			tree->left = new;
-		}
-		else
-			insert(tree->left, path);
-	}
-	else if (ft_strcmp(tree->fullpath, path) < 0)
-	{
-		if (!tree->right)
-		{
-			new = newNode(0, path);
-			tree->right = new;
-		}
-		else
-			insert(tree->right, path);
-	}
-	else //file has equal name (error?)
-		;
-}
-
-//remove printf
-void    print_tree(t_node *tree)
-{
-	if (tree->left)
-		print_tree(tree->left);
-	printf("%s\n", tree->fullpath);
-	if (tree->right)
-		print_tree(tree->right);
-}
-
 int 	main(int argc, char **argv)
 {
 	int		i = 1;
@@ -119,14 +66,7 @@ int 	main(int argc, char **argv)
 		a++;
 	}
 */
-	t_node *tree = newNode(0, ls.fil[0]);
-    int a = 1;
-    while (a < ls.fi)
-    {
-        insert(tree ,ls.fil[a]);
-        a++;
-    }	
-	print_tree(tree);
+	cmd_sort(&ls);
 	if (store.pcurrent)
 		operate(&store, "./");
 	return (0);
