@@ -6,7 +6,7 @@
 #    By: khou <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/22 18:08:35 by khou              #+#    #+#              #
-#    Updated: 2018/10/29 18:21:09 by khou             ###   ########.fr        #
+#    Updated: 2018/10/30 23:42:34 by khou             ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -25,8 +25,10 @@ HEADER = -I include
 SOURCES = main.c \
 		operate.c\
 		plong.c\
-		f_or_d.c\
-		sort.c
+		cmd_arg.c\
+		btree_sort.c\
+		openDir.c
+
 
 SRCS = $(addprefix $(DIR_S)/, $(SOURCES))
 

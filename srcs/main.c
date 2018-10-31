@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:55:09 by khou              #+#    #+#             */
-/*   Updated: 2018/10/29 20:11:14 by khou             ###   ########.fr       */
+/*   Updated: 2018/10/31 00:13:00 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int 	main(int argc, char **argv)
 		ls_grab_flag(++argv[i], &store); //get a set of flags
 		i++;
 	}
-	ft_printf("argv[%d] %s\n", i, argv[i]);
+//	ft_printf("argv[%d] %s\n", i, argv[i]);
 	store.pcurrent = true;
 	ls_init(&ls);
 	while (argv[i]) //loop thru cmd add
@@ -56,8 +56,8 @@ int 	main(int argc, char **argv)
 			ft_printf("ls: %s: No such file or directory\n", argv[i]);//error messages
 		i++;
 	}
-	ft_printf("store.pcurrent: %d\n", store.pcurrent);
-	ft_printf("nub of files: %d\n", ls.fi); 
+//	ft_printf("store.pcurrent: %d\n", store.pcurrent);
+//	ft_printf("nub of files: %d\n", ls.fi); 
 /* print out the list as it is
 	int a = 0;
 	while (a < ls.fi)
@@ -66,7 +66,7 @@ int 	main(int argc, char **argv)
 		a++;
 	}
 */
-	cmd_sort(&ls);
+	cmd_sort(&store, &ls);
 	if (store.pcurrent)
 		operate(&store, "./");
 	return (0);
