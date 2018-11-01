@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:55:09 by khou              #+#    #+#             */
-/*   Updated: 2018/10/31 23:31:44 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/01 00:30:07 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	flag_init(t_lsflags *store)
 	store->t = 0;
 	store->r = 0;
 	store->l = 0;
+	store->current = true;
 }
 static void		ls_grab_flag(char *flags, t_lsflags *store)
 {
@@ -51,13 +52,13 @@ int 	main(int argc, char **argv)
 		i++;
 	}
 //	ft_printf("argv[%d] %s\n", i, argv[i]);
-	store.pcurrent = true;
+//	store.pcurrent = true;
 	ls_init(&ls);
 	while (argv[i]) //loop thru cmd add
 	{
 		if (argv[i][0] != '-')
 		{
-			store.pcurrent = false;
+			store.current = false;
 //			if (argv[i][strlen(argv[i-1])] != '/')
 //				argv[i] = ft_strjoin(argv[i], "/");
 			f_or_d(&ls, argv[i]);
@@ -77,8 +78,16 @@ int 	main(int argc, char **argv)
 		a++;
 	}
 */
+	if (store.current)
+	{
+//		openDir(&store, "./");
+		f_or_d(&ls, "./");
+		cmd_sort(&store, &ls);
+		return (0);
+	}
+//	printf("ls.di: %d\n", ls.di);
+	if (ls.di == 1)
+		store.current = true;
 	cmd_sort(&store, &ls);
-	if (store.pcurrent)
-		openDir(&store, "./");
 	return (0);
 }

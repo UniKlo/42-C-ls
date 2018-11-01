@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 23:05:17 by khou              #+#    #+#             */
-/*   Updated: 2018/10/31 23:20:07 by khou             ###   ########.fr       */
+/*   Updated: 2018/10/31 23:51:47 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ void	sub_init(t_ls *ls)
 	ls->si = 0;
 }
 
-void	print_node(t_lsflags *store, char *path)
+void	print_node(t_lsflags *store, t_node *tree)
 {
-	if (!store->a && *path == '.')
+	if (!store->a && tree->fullpath[0] == '.')
 		return;
-	ft_printf("%s\n", path);
+	ft_printf("%s\n", tree->fullpath);
 }
 
 void    print_sub(t_lsflags *store, t_node *tree)
@@ -30,7 +30,7 @@ void    print_sub(t_lsflags *store, t_node *tree)
 	{
 		if (tree->left)
 			print_sub(store, tree->left);
-		print_node(store, tree->fullpath);
+		print_node(store, tree);
 //		ft_printf("%s\n", tree->fullpath);
 		if (tree->right)
 			print_sub(store, tree->right);
@@ -39,7 +39,7 @@ void    print_sub(t_lsflags *store, t_node *tree)
 	{
 		if (tree->right)
 			print_sub(store, tree->right);
-		print_node(store, tree->fullpath);
+		print_node(store, tree);
 //		ft_printf("%s\n", tree->fullpath);
 		if (tree->left)
 			print_sub(store, tree->left);
@@ -67,7 +67,7 @@ void	openDir(t_lsflags *store, char *path)
 	DIR				*dr = opendir(path);
 	struct dirent	*file;
 	if (dr == NULL)
-		ft_printf("%s is not readable.\n", path);
+		ft_printf("openDir: %s is not readable.\n", path);
 	sub_init(&ls);
 	while ((file = readdir(dr)))
 	{

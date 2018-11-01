@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 21:36:49 by khou              #+#    #+#             */
-/*   Updated: 2018/10/31 23:10:43 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/01 00:29:13 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ void	p_cmd(t_lsflags *store, t_node *tree)//open dir, and print the file
 		ft_printf("%s\n", tree->fullpath);
 	if (tree->isDir)
 	{
-		ft_printf("%s:\n", tree->fullpath);
+		if (!store->current)
+			ft_printf("%s:\n", tree->fullpath);
+//		ft_printf("%s:\n", tree->fullpath);
 		openDir(store, tree->fullpath);
 	}
 }
@@ -80,12 +82,7 @@ void    d_sort(t_lsflags *store, t_ls *ls)
 {
     t_node *tree = newNode(ls->dir[0]);
     int a = 1;
-	if (!ls->dir[a])
-	{
-		openDir(store, ls->dir[0]);
-		return ;
-	}					
-    while (a < ls->di)
+	while (a < ls->di)
     {
 //        ft_printf("insert: %s\n", ls->dir[a]);
         insert(store, tree ,ls->dir[a]);

@@ -6,7 +6,7 @@
 #    By: khou <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/22 18:08:35 by khou              #+#    #+#              #
-#    Updated: 2018/10/30 23:42:34 by khou             ###   ########.fr        #
+#    Updated: 2018/11/01 00:25:14 by khou             ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -23,7 +23,6 @@ DIR_O = obj
 HEADER = -I include
 
 SOURCES = main.c \
-		operate.c\
 		plong.c\
 		cmd_arg.c\
 		btree_sort.c\

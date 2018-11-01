@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:59:53 by khou              #+#    #+#             */
-/*   Updated: 2018/10/30 23:42:05 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/01 00:22:23 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct		s_lsflags
 	bool    t;
 	bool    r;
 	bool    l;
-	bool    pcurrent;
+	bool    current;
 }	t_lsflags;
 
 typedef struct		s_ls
