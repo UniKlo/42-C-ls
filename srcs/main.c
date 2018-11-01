@@ -6,12 +6,20 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:55:09 by khou              #+#    #+#             */
-/*   Updated: 2018/10/31 00:13:00 by khou             ###   ########.fr       */
+/*   Updated: 2018/10/31 23:31:44 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
+void	flag_init(t_lsflags *store)
+{
+	store->R = 0;
+	store->a = 0;
+	store->t = 0;
+	store->r = 0;
+	store->l = 0;
+}
 static void		ls_grab_flag(char *flags, t_lsflags *store)
 {
 	store->R == 1 || ft_strchr(flags, 'R') ? store->R = true : false;
@@ -34,8 +42,11 @@ int 	main(int argc, char **argv)
 	t_ls	ls;
 	
 	argc = 0;
+	flag_init(&store);
 	while (argv[i] && argv[i][0] == '-')
 	{
+		if (!argv[i][1])
+			ft_printf("ls: -: No such file or directory\n");
 		ls_grab_flag(++argv[i], &store); //get a set of flags
 		i++;
 	}
@@ -68,6 +79,6 @@ int 	main(int argc, char **argv)
 */
 	cmd_sort(&store, &ls);
 	if (store.pcurrent)
-		operate(&store, "./");
+		openDir(&store, "./");
 	return (0);
 }

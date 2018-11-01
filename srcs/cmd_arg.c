@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 21:36:49 by khou              #+#    #+#             */
-/*   Updated: 2018/10/31 00:16:38 by khou             ###   ########.fr       */
+/*   Updated: 2018/10/31 23:10:43 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,36 @@ void    f_or_d(t_ls *ls, char *path)
 	}
 }
 
-void	p_node(t_lsflags *store, t_node *tree)
+void	p_cmd(t_lsflags *store, t_node *tree)//open dir, and print the file
 {
 	if (!tree->isDir)
 		ft_printf("%s\n", tree->fullpath);
 	if (tree->isDir)
 	{
-		ft_printf("%s:\n\n", tree->fullpath);
+		ft_printf("%s:\n", tree->fullpath);
 		openDir(store, tree->fullpath);
 	}
 }
 
 void    print_tree(t_lsflags *store, t_node *tree)
 {
-	if (tree->left)
-		print_tree(store, tree->left);
-//	ft_printf("%s\n", tree->fullpath);
-	p_node(store, tree);
-	if (tree->right)
-		print_tree(store, tree->right);
+	if (store->r != 1)
+	{
+		if (tree->left)
+			print_tree(store, tree->left);
+		p_cmd(store, tree);
+		if (tree->right)
+			print_tree(store, tree->right);
+	}
+	else
+	{
+		if (tree->right)
+            print_tree(store, tree->right);
+    	p_cmd(store, tree);
+        if (tree->left)
+            print_tree(store, tree->left);
+	}
+		
 }
 
 void    f_sort(t_lsflags *store, t_ls *ls)

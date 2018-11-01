@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 21:49:20 by khou              #+#    #+#             */
-/*   Updated: 2018/10/30 22:46:56 by khou             ###   ########.fr       */
+/*   Updated: 2018/10/31 23:09:52 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int     ls_timecmp(const char *path1, const char *path2)
 {
     struct stat sb1;
     struct stat sb2;
-    if (lstat(path1, &sb1))
+    if (lstat(path1, &sb1) == -1)
         ft_printf("lstat- Could not open %s\n", path1);
-    if (lstat(path2, &sb2))
+    if (lstat(path2, &sb2) == -1)
         ft_printf("lstat- Could not open %s\n", path2);
 
     struct timespec t1 = sb1.st_mtimespec;
@@ -55,33 +55,31 @@ t_node  *newNode(char *fullpath)
     
     if (!(node = (t_node*)malloc(sizeof(t_node))))
 		return (NULL);
-    if (lstat(fullpath, &sb))
-		ft_printf("lstat- Could not open %s\n", fullpath);
+    lstat(fullpath, &sb);
+	if (S_ISDIR(sb.st_mode))
+		node->isDir = true;
 	else
-	{
-		if (S_ISDIR(sb.st_mode))
-			node->isDir = true;
-		else
-			node->isDir = false;
-	}
-    node->fullpath = fullpath;
-    node->left = NULL;
-    node->right = NULL;
-	ft_printf("Node: %s, isDir: %d\n", fullpath, node->isDir);
+		node->isDir = false;
+//	node->fullpath = ft_strdup(fullpath);
+	node->fullpath = fullpath;
+	node->left = NULL;
+	node->right = NULL;
+//	ft_printf("Node: %s, isDir: %d\n", fullpath, node->isDir);
     return (node);
 }
 
 ls_cmp	ls_dispatch(t_lsflags *store)
 {
  	ls_cmp f;
+//	ft_printf("t: %d\n", store->t);
 	if (store->t == 1)
-		f = ls_timecmp;
+		f = &ls_timecmp;
 	else
 		f = &ft_strcmp;
 	return(f);
 }
 
-void    insert(t_lsflags *store, t_node *tree, char  *path)//no way have smae name
+void    insert(t_lsflags *store, t_node *tree, char  *path)//no way have same name
 {
 	t_node *new;
 	ls_cmp cmp;
