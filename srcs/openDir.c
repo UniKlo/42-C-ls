@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 23:05:17 by khou              #+#    #+#             */
-/*   Updated: 2018/11/01 19:08:18 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/01 21:10:49 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void	ls_fmt(t_lsflags *store, t_node *tree)
 	if (store->l)
         lsLong(tree->fullpath);
 	else
-	ft_printf("%s\n", tree->fullpath);
+		pFname(tree->fullpath);
 }
 
 void	print_node(t_lsflags *store, t_node *tree)
 {
-	if (!store->a && tree->fullpath[0] == '.')
+	if (!store->a && ft_strstr(tree->fullpath, "/."))
 		return;
 	ls_fmt(store, tree);
 }
@@ -99,16 +99,32 @@ void	openDir(t_lsflags *store, char *path)
 	if (dr == NULL)
 		ft_printf("openDir: %s is not readable.\n", path);
 	sub_init(&ls);
+
+	int	blksize = 0;
+	struct stat sb;
 	while ((file = readdir(dr)))
 	{
 //		ft_printf("%s\n", file->d_name);
 		if (store->R)
-			ls.sub[ls.si++] = ft_strjoin(path, file->d_name);
+			ls.sub[ls.si] = ft_strjoin(path, file->d_name);
 		else
-//			ls.sub[ls.si++] = file->d_name;
-//			ls.sub[ls.si++] = ft_strdup(file->d_name);
-			ls.sub[ls.si++] = ft_strjoin(path, file->d_name);
+		{
+			ls.sub[ls.si] = ft_strjoin(path, "/");
+			ls.sub[ls.si] = ft_strjoin(ls.sub[ls.si], file->d_name);
+//			ft_printf("fullpath: %s\n", ls.sub[ls.si]);
+//			ls.si++;
+		}
+		if (store->l)
+        {
+			if (!store->a && ft_strstr(ls.sub[ls.si], "/."))
+				continue;
+			else
+				lstat(ls.sub[ls.si], &sb);
+			blksize += sb.st_blocks;
+		}
+		ls.si++;
 	}
+	ft_printf("total size of blocks: %.d\n", blksize);
 /*
 	int b = 0;
     while (b < ls.si)
@@ -116,7 +132,7 @@ void	openDir(t_lsflags *store, char *path)
         ft_printf("%s\n", ls.sub[b]);
         b++;
     }
-	ft_printf("\n");*/
+	ft_printf("\n"); */
 //	store = NULL;
 //	while(1);
 

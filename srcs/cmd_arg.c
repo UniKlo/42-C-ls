@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 21:36:49 by khou              #+#    #+#             */
-/*   Updated: 2018/11/01 18:00:53 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/01 20:59:33 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,34 @@ void    f_or_d(t_ls *ls, char *path)
 	{
 		ls->dir[ls->di++] = path;
 //		ft_printf("%d, ", S_ISDIR(thing.st_mode));
-		ft_printf("%s is a DIR\n", path);
+//		ft_printf("%s is a DIR\n", path);
 	}
 	else
 	{
 		ls->fil[ls->fi++] = path;
-		ft_printf("%d, ", S_ISDIR(thing.st_mode));
-		ft_printf("%s is a FIL\n", path);
+//		ft_printf("%d, ", S_ISDIR(thing.st_mode));
+//		ft_printf("%s is a FIL\n", path);
 	}
 }
 
 void	p_cmd(t_lsflags *store, t_node *tree)//open dir, and print the file
 {
+//	struct stat	sb;
 	if (!tree->isDir)
 		ls_fmt(store, tree);
 	if (tree->isDir)
 	{
 		if (!store->current)
 			ft_printf("%s:\n", tree->fullpath);
-		ft_printf("p_cmd: %s:\n", tree->fullpath);
+		ft_printf("%s:\n", tree->fullpath);//the DIR that is opened with mul
+/*
+		if (store->l)
+		{
+			lstat(tree->fullpath, &sb);
+			ft_printf("nmb of blocks: %.d\n", sb.st_blocks);
+			ft_printf("size of blocks: %.d\n", sb.st_blksize);
+		}
+*/
 		openDir(store, tree->fullpath);
 	}
 }

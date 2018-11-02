@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 13:45:49 by khou              #+#    #+#             */
-/*   Updated: 2018/11/01 19:13:52 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/01 20:12:57 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 void	lsLong(char *path)
 {
-	struct stat sb;
-	struct passwd *p;
-	struct group *grp;
+	struct stat		sb;
+	struct passwd	*p;
+	struct group	*grp;
+//	char			*fname;
 
 //	ft_printf("I m here in lsLong.\n");
-	ft_printf("WROKING on: %s\n", path);
+	ft_printf("                     WROKING on: %s\n", path);
 	lstat(path, &sb);
 /*--permission--*/
 	ft_printf("%c%c%c%c%c%c%c%c%c%c%c ",
@@ -61,10 +62,22 @@ void	lsLong(char *path)
 	ft_printf("%.5s ", ctime(&sb.st_mtime)+11);
 	
 /*--File Name--*/
-	if ((path = ft_strrchr(path, '/')))
-		ft_printf("%s\n", ++path);
+	/*
+	if ((fname = ft_strrchr(path, '/')))
+		ft_printf("%s\n", ++fname);
 	else
 		ft_printf("%s\n", path);
+	*/
+	pFname(path);
 }
 
+void	pFname(char *path)
+{
+	char	*fname;
+	
+	if ((fname = ft_strrchr(path, '/')))
+        ft_printf("%s\n", ++fname);
+    else
+        ft_printf("%s\n", path);
+}
 
