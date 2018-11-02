@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 21:36:49 by khou              #+#    #+#             */
-/*   Updated: 2018/11/01 00:29:13 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/01 18:00:53 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,34 @@ void    f_or_d(t_ls *ls, char *path)
 	struct stat thing;
 	
 	lstat(path, &thing);
+	if (!thing.st_nlink)
+	{
+		ft_printf("ls: %s: No such file or directory\n", path);
+		return ;
+	}
 	if (S_ISDIR(thing.st_mode))
 	{
 		ls->dir[ls->di++] = path;
 //		ft_printf("%d, ", S_ISDIR(thing.st_mode));
-//		ft_printf("%s is a DIR\n", path);
+		ft_printf("%s is a DIR\n", path);
 	}
 	else
 	{
 		ls->fil[ls->fi++] = path;
-//		ft_printf("%d, ", S_ISDIR(thing.st_mode));
-//		ft_printf("%s is a FIL\n", path);
+		ft_printf("%d, ", S_ISDIR(thing.st_mode));
+		ft_printf("%s is a FIL\n", path);
 	}
 }
 
 void	p_cmd(t_lsflags *store, t_node *tree)//open dir, and print the file
 {
 	if (!tree->isDir)
-		ft_printf("%s\n", tree->fullpath);
+		ls_fmt(store, tree);
 	if (tree->isDir)
 	{
 		if (!store->current)
 			ft_printf("%s:\n", tree->fullpath);
-//		ft_printf("%s:\n", tree->fullpath);
+		ft_printf("p_cmd: %s:\n", tree->fullpath);
 		openDir(store, tree->fullpath);
 	}
 }

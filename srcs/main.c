@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:55:09 by khou              #+#    #+#             */
-/*   Updated: 2018/11/01 00:30:07 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/01 00:31:42 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,6 @@ int 	main(int argc, char **argv)
 			ft_printf("ls: %s: No such file or directory\n", argv[i]);//error messages
 		i++;
 	}
-//	ft_printf("store.pcurrent: %d\n", store.pcurrent);
-//	ft_printf("nub of files: %d\n", ls.fi); 
-/* print out the list as it is
-	int a = 0;
-	while (a < ls.fi)
-	{
-		ft_printf("%s\n", ls.fil[a]);
-		a++;
-	}
-*/
 	if (store.current)
 	{
 //		openDir(&store, "./");

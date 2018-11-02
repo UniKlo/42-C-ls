@@ -6,13 +6,14 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:59:53 by khou              #+#    #+#             */
-/*   Updated: 2018/11/01 00:22:23 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/01 19:50:56 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LS_H
 # define LS_H
 
+# define LS_SIZE 5000
 /*
 ** -------------------------- External Headers ---------------------------------
 */
@@ -36,6 +37,7 @@
 typedef struct		s_node
 {
 	char			*fullpath;
+//	char			*name;
 	bool			isDir;
 //	struct timespec	mtime;
 	struct s_node 	*left;
@@ -54,11 +56,11 @@ typedef struct		s_lsflags
 
 typedef struct		s_ls
 {
-	char		*fil[125];
+	char		*fil[LS_SIZE];
 	int			fi;
-	char		*dir[125];
+	char		*dir[LS_SIZE];
 	int			di;
-	char		*sub[125];
+	char		*sub[LS_SIZE];
 	int			si;
 }			t_ls;
 
@@ -70,7 +72,7 @@ typedef int	(*ls_cmp)(const char *path1, const char *path2);
 ** -----------------------------------------------------------------------------
 */
 void	operate(t_lsflags *store, char *path);
-void    plong(char *readinto, struct stat *sb);
+void    lsLong(char *readinto);
 void	f_or_d(t_ls *ls, char *path);
 void	cmd_sort(t_lsflags *store, t_ls *ls);
 t_node	*newNode(char *fullpath);
@@ -79,5 +81,7 @@ void	openDir(t_lsflags *store, char *path);
 void	print_tree(t_lsflags *store, t_node *tree);
 ls_cmp	ls_dispatch(t_lsflags *store);
 int		ls_timecmp(const char *path1, const char *path2);
-
+void    p_cmd(t_lsflags *store, t_node *tree);
+void    ls_fmt(t_lsflags *store, t_node *tree);
+ 
 #endif
