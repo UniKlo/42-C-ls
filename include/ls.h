@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:59:53 by khou              #+#    #+#             */
-/*   Updated: 2018/11/01 20:13:40 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/02 03:40:58 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ typedef int	(*ls_cmp)(const char *path1, const char *path2);
 ** -----------------------------------------------------------------------------
 */
 void	operate(t_lsflags *store, char *path);
-void    lsLong(char *readinto);
 void	f_or_d(t_ls *ls, char *path);
 void	cmd_sort(t_lsflags *store, t_ls *ls);
 t_node	*newNode(char *fullpath);
@@ -83,6 +82,6 @@ ls_cmp	ls_dispatch(t_lsflags *store);
 int		ls_timecmp(const char *path1, const char *path2);
 void    p_cmd(t_lsflags *store, t_node *tree);
 void    ls_fmt(t_lsflags *store, t_node *tree);
-void	pFname(char *path);
+void	pFname(char c, char *path);
 
 #endif

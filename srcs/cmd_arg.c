@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 21:36:49 by khou              #+#    #+#             */
-/*   Updated: 2018/11/01 20:59:33 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/02 03:57:52 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,18 @@ void    f_or_d(t_ls *ls, char *path)
 
 void	p_cmd(t_lsflags *store, t_node *tree)//open dir, and print the file
 {
-//	struct stat	sb;
 	if (!tree->isDir)
+	{
+		if (store->R)
+			return;
 		ls_fmt(store, tree);
+	}
 	if (tree->isDir)
 	{
 		if (!store->current)
-			ft_printf("%s:\n", tree->fullpath);
-		ft_printf("%s:\n", tree->fullpath);//the DIR that is opened with mul
-/*
-		if (store->l)
-		{
-			lstat(tree->fullpath, &sb);
-			ft_printf("nmb of blocks: %.d\n", sb.st_blocks);
-			ft_printf("size of blocks: %.d\n", sb.st_blksize);
-		}
-*/
+			ft_printf("\n%s:\n", tree->fullpath);
 		openDir(store, tree->fullpath);
+		
 	}
 }
 

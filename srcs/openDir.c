@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 23:05:17 by khou              #+#    #+#             */
-/*   Updated: 2018/11/01 21:10:49 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/02 03:58:32 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,6 @@
 void	sub_init(t_ls *ls)
 {
 	ls->si = 0;
-}
-
-void	ls_fmt(t_lsflags *store, t_node *tree)
-{
-	if (store->l)
-        lsLong(tree->fullpath);
-	else
-		pFname(tree->fullpath);
 }
 
 void	print_node(t_lsflags *store, t_node *tree)
@@ -54,27 +46,34 @@ void    print_sub(t_lsflags *store, t_node *tree)
 	}
 }
 
-/*
 void    Rprint(t_lsflags *store, t_node *tree)
 {
-    if (store->r != 1)
-    {
-    	if (tree->left)
-            Rprint(store, tree->left);
-		p_cmd(store, tree);
-        if (tree->right)
-            Rprint(store, tree->right);
-    }
-    else
-    {
-	if (tree->right)
-    	    Rprint(store, tree->right);
-        p_cmd(store, tree);
-	if (tree->left)
-            Rprint(store, tree->left);
+	if (store->R)
+	{
+		if (store->r != 1)
+		{
+			if (tree->left)
+				Rprint(store, tree->left);
+			if (!ft_strstr(tree->fullpath, "/."))
+			{
+				store->current = false;
+				p_cmd(store, tree);
+			}
+			if (tree->right)
+				Rprint(store, tree->right);
+		}
+		else
+		{
+			if (tree->right)
+				Rprint(store, tree->right);
+			if (!ft_strstr(tree->fullpath, "/."))
+                p_cmd(store, tree);
+			if (tree->left)
+				Rprint(store, tree->left);
+		}
     }
 }
-*/
+
 void	sub_sort(t_lsflags *store, t_ls *ls)
 {
 	t_node *tree = newNode(ls->sub[0]);
@@ -86,9 +85,8 @@ void	sub_sort(t_lsflags *store, t_ls *ls)
         a++;
     }
     print_sub(store, tree);
-	printf("I m here in sub_sort.\n");
-//	if (store->R)
-//		Rprint(store, tree);
+//	printf("I m here in sub_sort.\n");
+	Rprint(store, tree);
 }
 
 void	openDir(t_lsflags *store, char *path)
@@ -104,27 +102,20 @@ void	openDir(t_lsflags *store, char *path)
 	struct stat sb;
 	while ((file = readdir(dr)))
 	{
-//		ft_printf("%s\n", file->d_name);
-		if (store->R)
-			ls.sub[ls.si] = ft_strjoin(path, file->d_name);
-		else
-		{
-			ls.sub[ls.si] = ft_strjoin(path, "/");
-			ls.sub[ls.si] = ft_strjoin(ls.sub[ls.si], file->d_name);
-//			ft_printf("fullpath: %s\n", ls.sub[ls.si]);
-//			ls.si++;
-		}
+		ls.sub[ls.si] = ft_strjoin(path, "/");
+		ls.sub[ls.si] = ft_strjoin(ls.sub[ls.si], file->d_name);
 		if (store->l)
         {
 			if (!store->a && ft_strstr(ls.sub[ls.si], "/."))
 				continue;
-			else
+ 			else
 				lstat(ls.sub[ls.si], &sb);
 			blksize += sb.st_blocks;
 		}
 		ls.si++;
 	}
-	ft_printf("total size of blocks: %.d\n", blksize);
+	if (store->l)
+		ft_printf("total %d\n", blksize);
 /*
 	int b = 0;
     while (b < ls.si)
@@ -138,5 +129,5 @@ void	openDir(t_lsflags *store, char *path)
 
 	sub_sort(store, &ls);
 	closedir(dr);//close it at the very end or heap use after free
-	ft_printf("  ----  openDir NL seperation  ----  \n");
+//	ft_printf("  ----  openDir NL seperation  ----  \n");
 }
