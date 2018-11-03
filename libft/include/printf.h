@@ -25,7 +25,7 @@
 # include <wchar.h>
 
 /*
-** --------------------------------- MICRO -------------------------------------
+** ---------------------------- COLOR MACROS -------------------------------------
 */
 
 # define KNRM  "\x1B[0m"
@@ -36,7 +36,14 @@
 # define KMAG  "\x1B[35m"
 # define KCYN  "\x1B[36m"
 # define KWHT  "\x1B[37m"
-
+# define BBLK  "\033[1m\033[30m"      /* Bold Black */
+# define BRED  "\033[1m\033[31m"      /* Bold Red */
+# define BGRN  "\033[1m\033[32m"      /* Bold Green */
+# define BYEL  "\033[1m\033[33m"      /* Bold Yellow */
+# define BBLU  "\033[1m\033[34m"      /* Bold Blue */
+# define BMAG  "\033[1m\033[35m"      /* Bold Magenta */
+# define BCYN  "\033[1m\033[36m"      /* Bold Cyan */
+# define BWHT  "\033[1m\033[37m"      /* Bold White */
 /*
 ** ------------------------- Structure Definition ------------------------------
 */

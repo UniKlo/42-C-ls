@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 13:45:49 by khou              #+#    #+#             */
-/*   Updated: 2018/11/02 03:50:01 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/02 16:37:16 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,20 @@ char	fType(int n)
 	char c;
 
 	c = '\0';
-	if (n & S_IFREG)
-        c = '-';
+	if (n == S_IFLNK)
+		c = 'l';
+	else if (n & S_IFREG) // how to mask it out?
+		c = '-';
 	else if (n & S_IFDIR)
 		c = 'd';
     else if (n & S_IFCHR)
         c = 'c';
 	else if (n & S_IFBLK)
         c = 'b';
-	else if (n & S_IFLNK)
-		c = 'l';
 	else if (n & S_IFIFO)
         c = 'p';
-//	else
-///		c = '-';
+	else
+		c = '?';
 	return (c);
 }
 
@@ -47,7 +47,7 @@ void	ls_fmt( t_lsflags *store, t_node *tree)
 	{
 /*--permission--*/
 		ft_printf("%c%c%c%c%c%c%c%c%c%c%c ",
-				  fType(sb.st_mode),
+				  fType(sb.st_mode & S_IFMT),//how to mask
 				  (sb.st_mode & S_IRUSR) ? 'r' : '-',
 				  (sb.st_mode & S_IWUSR) ? 'w' : '-',
 				  (sb.st_mode & S_IXUSR) ?
@@ -85,18 +85,24 @@ void	ls_fmt( t_lsflags *store, t_node *tree)
 		ft_printf("%.5s ", ctime(&sb.st_mtime)+11);
 	}
 /*--File Name--*/
-	pFname(fType(sb.st_mode), tree->fullpath);
+	pFname(fType(sb.st_mode & S_IFMT), tree->fullpath);//how to mask
 }
 
 void	pFname(char c, char *path)
 {
 	char	*fname;
 	char	*color;
-
+	char	*bypath = NULL;
+//	struct stat	sb;
+	
 	if (c == 'd')
-		color = KCYN;
+		color = BCYN;
 	else if (c == 'l')
+	{
 		color = KMAG;
+		readlink(path, bypath, 5000);
+		ft_printf("bypath: %s\n", bypath);
+	}
 	else
 		color = KNRM;
 
