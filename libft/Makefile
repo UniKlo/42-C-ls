@@ -6,7 +6,7 @@
 #    By: khou <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/22 18:08:35 by khou              #+#    #+#              #
-#    Updated: 2018/10/25 15:43:37 by khou             ###   ########.fr        #
+#    Updated: 2018/11/03 15:14:46 by khou             ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -60,13 +60,6 @@ $(NAME): $(OBJS)
 
 ./%.o: ./%.c $(INC)
 	@$(C) $(FLAGS) -I $(DIR_INC) -o $@ -c $<
-
-norme:
-	norminette ./libft/
-	@echo
-	norminette ./$(HEADER)/
-	@echo
-	norminette ./$(DIR_S)/
 
 clean:
 	@rm -f $(OBJS)

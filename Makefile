@@ -6,7 +6,7 @@
 #    By: khou <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/22 18:08:35 by khou              #+#    #+#              #
-#    Updated: 2018/11/01 00:25:14 by khou             ###   ########.fr        #
+#    Updated: 2018/11/03 15:13:46 by khou             ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -37,13 +37,6 @@ $(NAME): $(SRCS)
 	@make -C libft/
 	@$(C) libft/libft.a $(HEADER) $(FLAGS) $(SRCS) -o $(NAME)
 	@echo "\033[32mBinary \033[1;32m$(NAME)\033[1;0m\033[32m created.\033[0m"
-
-norme:
-	norminette ./libft/
-	@echo
-	norminette ./$(HEADER)/
-	@echo
-	norminette ./$(DIR_S)/
 
 clean:
 	@make clean -C libft
