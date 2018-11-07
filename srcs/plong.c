@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 13:45:49 by khou              #+#    #+#             */
-/*   Updated: 2018/11/03 16:44:40 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/06 16:33:05 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,23 @@ char	fType(int n)
 	char c;
 
 	c = '\0';
-	if (n == S_IFLNK)
-		c = 'l';
-	else if (n & S_IFREG) // how to mask it out?
-		c = '-';
-	else if (n & S_IFDIR)
-		c = 'd';
-    else if (n & S_IFCHR)
+
+    if (n == S_IFLNK)
+        c = 'l';
+    else if (n == S_IFREG)
+        c = '-';
+    else if (n == S_IFDIR)
+        c = 'd';
+    else if (n == S_IFCHR)
         c = 'c';
-	else if (n & S_IFBLK)
+    else if (n == S_IFBLK)
         c = 'b';
-	else if (n & S_IFIFO)
+    else if (n == S_IFIFO)
         c = 'p';
-	else
-		c = '?';
+	else if (n == S_IFSOCK)
+        c = 's';	
+    else
+        c = '?';
 	return (c);
 }
 
@@ -50,13 +53,11 @@ char	*fPermission(int n)
                   ((n & S_ISGID) ? 's' : 'x') :
                   ((n & S_ISGID) ? 'S' : '-');
 	perm[7] = (n & S_IROTH) ? 'r' : '-';
-	perm[8] = (n & S_IWOTH) ? 'w' : '-';
-	perm[9] = (n & S_IXOTH) ? 'x' : '-';
-	perm[10] = '@';
+	perm[8] = (n & S_IWOTH) ? 'w' : '-';	
+	perm[9] = (n & S_IXOTH) ? ((n & S_ISVTX) ? 't': 'x') :
+		((n & S_ISVTX) ? 'T': '-');
+	perm[10] = ' ';//'@'extended arthributes 
 	perm[11] = '\0';
-	if (perm[0] == '-' && perm[3] == perm[6] &&
-		perm[6] == perm[9] && perm[9] == 'x')
-		perm[0] = 's';
 	ft_printf("%s ", perm);
 	return (perm);
 }
@@ -74,24 +75,6 @@ void	ls_fmt( t_lsflags *store, t_node *tree)
 	if (store->l)
 	{
 /*--permission--*/
-/*		ft_printf("%c%c%c%c%c%c%c%c%c%c%c ",
-				  fType(sb.st_mode & S_IFMT),//how to mask
-				  (sb.st_mode & S_IRUSR) ? 'r' : '-',
-				  (sb.st_mode & S_IWUSR) ? 'w' : '-',
-				  (sb.st_mode & S_IXUSR) ?
-				  ((sb.st_mode & S_ISUID) ? 's' : 'x') :
-				  ((sb.st_mode & S_ISUID) ?	'S' : '-'),
-				  (sb.st_mode & S_IRGRP) ? 'r' : '-',
-				  (sb.st_mode & S_IWGRP) ? 'w' : '-',
-				  (sb.st_mode & S_IXGRP) ?
-				  ((sb.st_mode & S_ISGID) ?	's' : 'x') :
-				  ((sb.st_mode & S_ISGID) ? 'S' : '-'),
-				  (sb.st_mode & S_IROTH) ? 'r' : '-',
-				  (sb.st_mode & S_IWOTH) ? 'w' : '-',
-				  (sb.st_mode & S_IXOTH) ? 'x' : '-',
-				  '@'
-			);
-*/
 		permission = fPermission(sb.st_mode);
 		
 /*--Link count--*/
@@ -120,6 +103,8 @@ void	ls_fmt( t_lsflags *store, t_node *tree)
 	free (permission);
 }
 
+# define BUF_SIZE 5000
+
 void	pFname(char c, char *path)
 {
 	char	*fname;
@@ -133,7 +118,8 @@ void	pFname(char c, char *path)
 	else if (c == 'l')
 	{
 		color = KMAG;
-		ret = readlink(path, bypath, 5000);
+		ret = readlink(path, bypath, BUF_SIZE);
+//		bypath[ret] = '\0';
 		ft_printf("readlink buff: %ld\n", ret);
 		ft_printf("bypath: %s\n", bypath);
 	}

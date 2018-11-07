@@ -19,9 +19,11 @@ chomd 000 for no authoriation
 
 
 
-lstat to tele whether it is a dir
 
 
 /Volumes/Storage/goinfre
-/dev
-/
+/dev 
+10/06/2018
+/tmp check l
+/tmp/ check l & d & -
+/TEST for file type 's'
