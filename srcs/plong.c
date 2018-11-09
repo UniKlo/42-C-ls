@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 13:45:49 by khou              #+#    #+#             */
-/*   Updated: 2018/11/06 16:33:05 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/09 01:26:09 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,21 @@ void	ls_fmt( t_lsflags *store, t_node *tree)
 			ft_printf("%s", grp->gr_name);
 		ft_printf(" ");
 /*--File Size--*/
-		ft_printf("%8lld", (long long) sb.st_size);
+		if (S_ISCHR(sb.st_mode) || S_ISBLK(sb.st_mode))
+			ft_printf("%10d, %d", major(sb.st_rdev), minor(sb.st_rdev));
+		else
+			ft_printf("%8lld", (long long) sb.st_size);
 		ft_printf(" ");
 /*--Mtime--*/
 		ft_printf("%.6s ", ctime(&sb.st_mtime)+4);
 		ft_printf("%.5s ", ctime(&sb.st_mtime)+11);
-	}
+	
 /*--File Name--*/
-	pFname(permission[0], tree->fullpath);//how to mask
-	free (permission);
+		pFname(permission[0], tree->fullpath);//how to mask
+		free (permission);
+	}
+	else
+		pFname(0, tree->fullpath);
 }
 
 # define BUF_SIZE 5000

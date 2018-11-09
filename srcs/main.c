@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:55:09 by khou              #+#    #+#             */
-/*   Updated: 2018/11/01 21:20:31 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/09 01:25:18 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,13 @@ int 	main(int argc, char **argv)
 		ls_grab_flag(++argv[i], &store); //get a set of flags
 		i++;
 	}
-//	ft_printf("argv[%d] %s\n", i, argv[i]);
-//	store.pcurrent = true;
 	ls_init(&ls);
 	while (argv[i]) //loop thru cmd add
 	{
 		if (argv[i][0] != '-')
 		{
 			store.current = false;
-//			if (argv[i][strlen(argv[i-1])] != '/')
-//				argv[i] = ft_strjoin(argv[i], "/");
 			f_or_d(&ls, argv[i]);
-//			free(argv[i]);
 		}
 		else
 			ft_printf("ls: %s: No such file or directory\n", argv[i]);//error messages
@@ -70,12 +65,10 @@ int 	main(int argc, char **argv)
 	}
 	if (store.current)
 	{
-//		openDir(&store, "./");
 		f_or_d(&ls, "./");
 		cmd_sort(&store, &ls);
 		return (0);
 	}
-//	printf("ls.di: %d\n", ls.di);
 	if (ls.di == 1)
 		store.current = true;
 	cmd_sort(&store, &ls);

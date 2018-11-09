@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 23:05:17 by khou              #+#    #+#             */
-/*   Updated: 2018/11/02 03:58:32 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/08 23:37:35 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ void    Rprint(t_lsflags *store, t_node *tree)
 			if (tree->right)
 				Rprint(store, tree->right);
 			if (!ft_strstr(tree->fullpath, "/."))
-                p_cmd(store, tree);
+			{
+				store->current = false;
+				p_cmd(store, tree);
+			}
 			if (tree->left)
 				Rprint(store, tree->left);
 		}
@@ -87,6 +90,7 @@ void	sub_sort(t_lsflags *store, t_ls *ls)
     print_sub(store, tree);
 //	printf("I m here in sub_sort.\n");
 	Rprint(store, tree);
+	//free;
 }
 
 void	openDir(t_lsflags *store, char *path)
@@ -95,7 +99,10 @@ void	openDir(t_lsflags *store, char *path)
 	DIR				*dr = opendir(path);
 	struct dirent	*file;
 	if (dr == NULL)
+	{
 		ft_printf("openDir: %s is not readable.\n", path);
+		return ;
+	}
 	sub_init(&ls);
 
 	int	blksize = 0;
@@ -128,6 +135,18 @@ void	openDir(t_lsflags *store, char *path)
 //	while(1);
 
 	sub_sort(store, &ls);
+	int b = 0;
+    while (b < ls.si)//free strjoin
+    {
+//        ft_printf("%s\n", ls.sub[b]);
+		free(ls.sub[b]);
+        b++;
+    }
 	closedir(dr);//close it at the very end or heap use after free
-//	ft_printf("  ----  openDir NL seperation  ----  \n");
 }
+/*
+1.open dir and put all files into an array.
+2. and it will be sorted as a tree in sub_sort.
+3. free strjoin and the tree.
+4. close dir.
+*/

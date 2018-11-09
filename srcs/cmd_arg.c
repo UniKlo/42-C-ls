@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 21:36:49 by khou              #+#    #+#             */
-/*   Updated: 2018/11/02 03:57:52 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/09 01:27:09 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	p_cmd(t_lsflags *store, t_node *tree)//open dir, and print the file
 	}
 	if (tree->isDir)
 	{
+		printf("T:F %d", store->current);
 		if (!store->current)
 			ft_printf("\n%s:\n", tree->fullpath);
 		openDir(store, tree->fullpath);
@@ -58,7 +59,7 @@ void    print_tree(t_lsflags *store, t_node *tree)
 	if (store->r != 1)
 	{
 		if (tree->left)
-			print_tree(store, tree->left);
+			print_tree(store, tree->left);		
 		p_cmd(store, tree);
 		if (tree->right)
 			print_tree(store, tree->right);
@@ -85,11 +86,13 @@ void    f_sort(t_lsflags *store, t_ls *ls)
         a++;
     }
     print_tree(store, tree);
+//	free_tree(tree);
 }
 
 void    d_sort(t_lsflags *store, t_ls *ls)
 {
     t_node *tree = newNode(ls->dir[0]);
+	ft_printf("the root: %s\n", ls->dir[0]);
     int a = 1;
 	while (a < ls->di)
     {
@@ -98,6 +101,7 @@ void    d_sort(t_lsflags *store, t_ls *ls)
         a++;
     }
     print_tree(store, tree);
+//	free_tree(node);
 }
 
 void cmd_sort(t_lsflags *store, t_ls *ls)
