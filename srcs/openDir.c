@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 23:05:17 by khou              #+#    #+#             */
-/*   Updated: 2018/11/08 23:37:35 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/10 00:17:03 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,12 @@ void	sub_sort(t_lsflags *store, t_ls *ls)
     print_sub(store, tree);
 //	printf("I m here in sub_sort.\n");
 	Rprint(store, tree);
-	//free;
+	ft_printf("I m still working here\n");
+//	ft_printf("sub_sort: the root: %s\n", tree->fullpath);
+	ft_printf("last ri: %d\n", g_free.ri);
+	g_free.root[g_free.ri] = tree;
+	ft_printf("g_free[ri: %d]: %s\n", g_free.ri, g_free.root[g_free.ri]->fullpath);
+    g_free.ri++;
 }
 
 void	openDir(t_lsflags *store, char *path)
@@ -98,6 +103,7 @@ void	openDir(t_lsflags *store, char *path)
 	t_ls			ls;
 	DIR				*dr = opendir(path);
 	struct dirent	*file;
+	char		*tmp;
 	if (dr == NULL)
 	{
 		ft_printf("openDir: %s is not readable.\n", path);
@@ -109,33 +115,34 @@ void	openDir(t_lsflags *store, char *path)
 	struct stat sb;
 	while ((file = readdir(dr)))
 	{
-		ls.sub[ls.si] = ft_strjoin(path, "/");
-		ls.sub[ls.si] = ft_strjoin(ls.sub[ls.si], file->d_name);
+		tmp = ft_strjoin(path, "/");
+		ls.sub[ls.si] = ft_strjoin(tmp, file->d_name);
+		free(tmp);
+		ft_printf("list[%d]: %s\n", ls.si, ls.sub[ls.si]);
 		if (store->l)
         {
 			if (!store->a && ft_strstr(ls.sub[ls.si], "/."))
-				continue;
+				;
  			else
 				lstat(ls.sub[ls.si], &sb);
 			blksize += sb.st_blocks;
 		}
 		ls.si++;
 	}
+	ft_printf("total #: %d\n", ls.si);
 	if (store->l)
 		ft_printf("total %d\n", blksize);
-/*
+
 	int b = 0;
     while (b < ls.si)
     {
-        ft_printf("%s\n", ls.sub[b]);
+        ft_printf("openDir strjoin:%s\n", ls.sub[b]);
         b++;
     }
-	ft_printf("\n"); */
-//	store = NULL;
-//	while(1);
+	ft_printf("\n");
 
 	sub_sort(store, &ls);
-	int b = 0;
+	 b = 0;
     while (b < ls.si)//free strjoin
     {
 //        ft_printf("%s\n", ls.sub[b]);

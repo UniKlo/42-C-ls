@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:59:53 by khou              #+#    #+#             */
-/*   Updated: 2018/11/08 20:11:39 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/09 22:27:39 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,14 @@ typedef struct		s_ls
 	int				si;
 }					t_ls;
 
+typedef struct		s_free
+{
+	t_node			*root[LS_SIZE];
+	int				ri;
+}					t_free;
+
+t_free g_free;
+
 typedef int	(*ls_cmp)(const char *path1, const char *path2);
 
 /*
@@ -84,5 +92,5 @@ int					ls_timecmp(const char *path1, const char *path2);
 void				p_cmd(t_lsflags *store, t_node *tree);
 void				ls_fmt(t_lsflags *store, t_node *tree);
 void				pFname(char c, char *path);
-
+void				free_tree(t_node *tree);
 #endif

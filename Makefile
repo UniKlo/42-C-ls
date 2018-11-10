@@ -6,7 +6,7 @@
 #    By: khou <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/22 18:08:35 by khou              #+#    #+#              #
-#    Updated: 2018/11/03 15:13:46 by khou             ###   ########.fr        #
+#    Updated: 2018/11/09 03:23:00 by khou             ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -14,7 +14,7 @@ C = clang
 
 NAME = ft_ls
 
-FLAGS = -Wall -Wextra -Werror -fsanitize=address #-g
+FLAGS = -Wall -Wextra -Werror #-fsanitize=address #-g
 
 DIR_S = srcs
 
@@ -26,7 +26,8 @@ SOURCES = main.c \
 		plong.c\
 		cmd_arg.c\
 		btree_sort.c\
-		openDir.c
+		openDir.c\
+		free.c\
 
 
 SRCS = $(addprefix $(DIR_S)/, $(SOURCES))

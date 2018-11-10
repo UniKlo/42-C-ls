@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 13:45:49 by khou              #+#    #+#             */
-/*   Updated: 2018/11/09 01:26:09 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/09 03:11:50 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	fType(int n)
 	return (c);
 }
 
-char	*fPermission(int n)
+char	*fPermission(t_lsflags *store, int n)
 {
 	char	*perm = ft_strnew(11);
 
@@ -58,11 +58,12 @@ char	*fPermission(int n)
 		((n & S_ISVTX) ? 'T': '-');
 	perm[10] = ' ';//'@'extended arthributes 
 	perm[11] = '\0';
-	ft_printf("%s ", perm);
+	if (store->l)
+		ft_printf("%s ", perm);
 	return (perm);
 }
 
-void	ls_fmt( t_lsflags *store, t_node *tree)
+void	ls_fmt(t_lsflags *store, t_node *tree)
 {
 	struct stat		sb;
 	struct passwd	*p;
@@ -72,11 +73,10 @@ void	ls_fmt( t_lsflags *store, t_node *tree)
 
 //	ft_printf("                     WROKING on: %s\n", tree->fullpath);
 	lstat(tree->fullpath, &sb);
-	if (store->l)
-	{
 /*--permission--*/
-		permission = fPermission(sb.st_mode);
-		
+	permission = fPermission(store, sb.st_mode);
+    if (store->l)
+    {		
 /*--Link count--*/
 		ft_printf("%ld", (long) sb.st_nlink);
 		ft_printf(" ");
@@ -100,13 +100,10 @@ void	ls_fmt( t_lsflags *store, t_node *tree)
 /*--Mtime--*/
 		ft_printf("%.6s ", ctime(&sb.st_mtime)+4);
 		ft_printf("%.5s ", ctime(&sb.st_mtime)+11);
-	
-/*--File Name--*/
-		pFname(permission[0], tree->fullpath);//how to mask
-		free (permission);
 	}
-	else
-		pFname(0, tree->fullpath);
+/*--File Name--*/
+	pFname(permission[0], tree->fullpath);//how to mask
+	free (permission);
 }
 
 # define BUF_SIZE 5000

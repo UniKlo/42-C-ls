@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 21:49:20 by khou              #+#    #+#             */
-/*   Updated: 2018/11/06 16:51:04 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/09 23:16:46 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ t_node  *newNode(char *fullpath)
 		node->isDir = true;
 	else
 		node->isDir = false;
-//	node->fullpath = ft_strdup(fullpath);
-	node->fullpath = fullpath;
+	node->fullpath = ft_strdup(fullpath);
+//	node->fullpath = fullpath;
 	node->left = NULL;
 	node->right = NULL;
 //	ft_printf("Node: %s, isDir: %d\n", fullpath, node->isDir);
