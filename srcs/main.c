@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:55:09 by khou              #+#    #+#             */
-/*   Updated: 2018/11/10 00:18:52 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/10 00:23:27 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,11 @@ int 	main(int argc, char **argv)
 	cmd_sort(&store, &ls);
 	
     int b = g_free.ri - 1;
-	ft_printf("IN MAIN: #of root: %d, index b: %d\n", g_free.ri, b);
-
     while (b > -1)
     {
-        ft_printf("g_free.root[%d]: %s\n",b,  g_free.root[b]->fullpath);
 		free_tree(g_free.root[b]);
         b--;
     }
-
+ 
 	return (0);
 }

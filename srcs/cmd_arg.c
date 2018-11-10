@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 21:36:49 by khou              #+#    #+#             */
-/*   Updated: 2018/11/09 23:48:13 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/10 00:22:52 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void    f_sort(t_lsflags *store, t_ls *ls)
     int a = 1;
     while (a < ls->fi)
     {
-//		ft_printf("insert: %s\n", ls->fil[a]);
         insert(store, tree ,ls->fil[a]);
         a++;
     }
@@ -96,15 +95,10 @@ void    d_sort(t_lsflags *store, t_ls *ls)
     int a = 1;
 	while (a < ls->di)
     {
-//        ft_printf("insert: %s\n", ls->dir[a]);
         insert(store, tree ,ls->dir[a]);
         a++;
     }
-//    print_tree(store, tree);
-//	free_tree(node);
 	g_free.root[g_free.ri] = tree;
-	ft_printf("d_soret:g_free[%d]: %s\n",
-			  g_free.ri, g_free.root[g_free.ri]->fullpath);
 	g_free.ri++;
 	print_tree(store, tree);
 }
