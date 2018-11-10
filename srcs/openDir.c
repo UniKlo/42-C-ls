@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 23:05:17 by khou              #+#    #+#             */
-/*   Updated: 2018/11/10 00:24:17 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/10 03:02:58 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,12 @@ void	openDir(t_lsflags *store, char *path)
 	t_ls			ls;
 	DIR				*dr = opendir(path);
 	struct dirent	*file;
-	char		*tmp;
+	char			*tmp;
+	char			*fname;
 	if (dr == NULL)
 	{
-		ft_printf("openDir: %s is not readable.\n", path);
+		if ((fname = ft_strrchr(path, '/')))
+		ft_printf("ls: %s: Permission denied\n", ++fname);
 		return ;
 	}
 	sub_init(&ls);
