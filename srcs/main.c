@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:55:09 by khou              #+#    #+#             */
-/*   Updated: 2018/11/10 01:43:28 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/11 01:51:45 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,31 @@ void		ls_init(t_ls *ls)
 {
 	ls->fi = 0;
 	ls->di = 0;
+	ls->si = 0;
+}
+
+void	f_or_d(t_ls *ls, char *path)
+{
+	struct stat thing;
+
+	lstat(path, &thing);
+	if (!thing.st_nlink)
+	{
+		ft_printf("ls: %s: No such file or directory\n", path);
+		return ;
+	}
+	if (S_ISDIR(thing.st_mode))
+	{
+		ls->dir[ls->di++] = path;
+//		ft_printf("%d, ", S_is_dir(thing.st_mode));
+//		ft_printf("%s is a DIR\n", path);
+	}
+	else
+	{
+		ls->fil[ls->fi++] = path;
+//		ft_printf("%d, ", S_is_dir(thing.st_mode));
+//		ft_printf("%s is a FIL\n", path);
+	}
 }
 
 int			main(int argc, char **argv)
@@ -56,9 +81,6 @@ int			main(int argc, char **argv)
 		i++;
 	}
 	ls_init(&ls);
-/*
-//loop thru cmd
-*/
 	while (argv[i])
 	{
 		if (argv[i][0] != '-')

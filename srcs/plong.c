@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 13:45:49 by khou              #+#    #+#             */
-/*   Updated: 2018/11/10 23:02:47 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/11 01:46:56 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,11 @@ void	ls_fmt(t_lsflags *store, t_node *tree)
 		ft_printf("%.6s ", ctime(&sb.st_mtime) + 4);
 		ft_printf("%.5s ", ctime(&sb.st_mtime) + 11);
 	}
-	pFname(permission[0], tree->fullpath);
+	p_fname(permission[0], tree->fullpath);
 	free(permission);
 }
 
-#define BUF_SIZE 5000
-
-void	pFname(char c, char *path)
+void	p_fname(char c, char *path)
 {
 	char	*fname;
 	char	*color;

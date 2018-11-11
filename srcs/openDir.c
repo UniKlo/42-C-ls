@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   openDir.c                                          :+:      :+:    :+:   */
+/*   open_dir.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,11 +11,6 @@
 /* ************************************************************************** */
 
 #include "ls.h"
-
-void	sub_init(t_ls *ls)
-{
-	ls->si = 0;
-}
 
 void	print_node(t_lsflags *store, t_node *tree)
 {
@@ -80,7 +75,7 @@ void	sub_sort(t_lsflags *store, t_ls *ls)
 	t_node	*tree;
 	int		a;
 
-	tree = newNode(ls->sub[0]);
+	tree = new_node(ls->sub[0]);
 	a = 1;
 	while (a < ls->si)
 	{
@@ -93,7 +88,7 @@ void	sub_sort(t_lsflags *store, t_ls *ls)
 	g_free.ri++;
 }
 
-void	openDir(t_lsflags *store, char *path)
+void	open_dir(t_lsflags *store, char *path)
 {
 	t_ls			ls;
 	DIR				*dr;
@@ -111,7 +106,7 @@ void	openDir(t_lsflags *store, char *path)
 			ft_printf("ls: %s: Permission denied\n", ++fname);
 		return ;
 	}
-	sub_init(&ls);
+	ls_init(&ls);
 	blksize = 0;
 	while ((file = readdir(dr)))
 	{

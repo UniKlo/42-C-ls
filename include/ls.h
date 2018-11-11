@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:59:53 by khou              #+#    #+#             */
-/*   Updated: 2018/11/09 22:27:39 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/11 01:50:17 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LS_H
 
 # define LS_SIZE 5000
+# define BUF_SIZE 5000
 
 /*
 ** -------------------------- External Headers ---------------------------------
@@ -38,9 +39,7 @@
 typedef struct		s_node
 {
 	char			*fullpath;
-//	char			*name;
-	bool			isDir;
-//	struct timespec	mtime;
+	bool			is_dir;
 	struct s_node	*left;
 	struct s_node	*right;
 }					t_node;
@@ -81,16 +80,16 @@ typedef int	(*ls_cmp)(const char *path1, const char *path2);
 ** -----------------------------------------------------------------------------
 */
 void				operate(t_lsflags *store, char *path);
-void				f_or_d(t_ls *ls, char *path);
+void				ls_init(t_ls *ls);
 void				cmd_sort(t_lsflags *store, t_ls *ls);
-t_node				*newNode(char *fullpath);
+t_node				*new_node(char *fullpath);
 void				insert(t_lsflags *store, t_node *tree, char *path);
-void				openDir(t_lsflags *store, char *path);
+void				open_dir(t_lsflags *store, char *path);
 void				print_tree(t_lsflags *store, t_node *tree);
 ls_cmp				ls_dispatch(t_lsflags *store);
 int					ls_timecmp(const char *path1, const char *path2);
 void				p_cmd(t_lsflags *store, t_node *tree);
 void				ls_fmt(t_lsflags *store, t_node *tree);
-void				pFname(char c, char *path);
+void				p_fname(char c, char *path);
 void				free_tree(t_node *tree);
 #endif

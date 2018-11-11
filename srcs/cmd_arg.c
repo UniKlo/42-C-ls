@@ -12,43 +12,19 @@
 
 #include "ls.h"
 
-void	f_or_d(t_ls *ls, char *path)
-{
-	struct stat thing;
-
-	lstat(path, &thing);
-	if (!thing.st_nlink)
-	{
-		ft_printf("ls: %s: No such file or directory\n", path);
-		return ;
-	}
-	if (S_ISDIR(thing.st_mode))
-	{
-		ls->dir[ls->di++] = path;
-//		ft_printf("%d, ", S_ISDIR(thing.st_mode));
-//		ft_printf("%s is a DIR\n", path);
-	}
-	else
-	{
-		ls->fil[ls->fi++] = path;
- //		ft_printf("%d, ", S_ISDIR(thing.st_mode));
-//		ft_printf("%s is a FIL\n", path);
-	}
-}
-
 void	p_cmd(t_lsflags *store, t_node *tree)//open dir, and print the file
 {
-	if (!tree->isDir)
+	if (!tree->is_dir)
 	{
 		if (store->R)
 			return ;
 		ls_fmt(store, tree);
 	}
-	if (tree->isDir)
+	if (tree->is_dir)
 	{
 		if (!store->current)
 			ft_printf("\n%s:\n", tree->fullpath);
-		openDir(store, tree->fullpath);
+		open_dir(store, tree->fullpath);
 	}
 }
 
@@ -77,7 +53,7 @@ void	f_sort(t_lsflags *store, t_ls *ls)
 	t_node	*tree;
 	int		a;
 
-	tree = newNode(ls->fil[0]);
+	tree = new_node(ls->fil[0]);
 	a = 1;
 	while (a < ls->fi)
 	{
@@ -94,7 +70,7 @@ void	d_sort(t_lsflags *store, t_ls *ls)
 	t_node	*tree;
 	int		a;
 
-	tree = newNode(ls->dir[0]);
+	tree = new_node(ls->dir[0]);
 	a = 1;
 	while (a < ls->di)
 	{

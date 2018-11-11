@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 21:49:20 by khou              #+#    #+#             */
-/*   Updated: 2018/11/10 23:04:58 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/11 01:44:10 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,32 @@ int		ls_timecmp(const char *path1, const char *path2)
 {
 	struct stat		sb1;
 	struct stat		sb2;
-	struct timespec t1;
-	struct timespec t2;
 	int				ret;
 
-	t1 = sb1.st_mtimespec;
-	t2 = sb2.st_mtimespec;
-	if (lstat(path1, &sb1) == -1)
-		ft_printf("lstat- Could not open %s\n", path1);
-	if (lstat(path2, &sb2) == -1)
-		ft_printf("lstat- Could not open %s\n", path2);
+	lstat(path1, &sb1) && lstat(path2, &sb2);
 	ret = 0;
-	if (t1.tv_sec == t2.tv_sec)
+	if (sb1.st_mtimespec.tv_sec == sb2.st_mtimespec.tv_sec)
 	{
-		if (t1.tv_nsec == t2.tv_nsec)
+		if (sb1.st_mtimespec.tv_nsec == sb2.st_mtimespec.tv_nsec)
 		{
 			if (ft_strcmp(path1, path2) > 0)
 				ret = 1;
 			else
 				ret = -1;
 		}
-		else if (t1.tv_nsec < t2.tv_nsec)
+		else if (sb1.st_mtimespec.tv_nsec < sb2.st_mtimespec.tv_nsec)
 			ret = 1;
 		else
 			ret = -1;
 	}
-	else if (t1.tv_sec < t2.tv_sec)
+	else if (sb1.st_mtimespec.tv_sec < sb2.st_mtimespec.tv_sec)
 		ret = 1;
 	else
 		ret = -1;
 	return (ret);
 }
 
-t_node	*newNode(char *fullpath)
+t_node	*new_node(char *fullpath)
 {
 	t_node		*node;
 	struct stat sb;
@@ -57,9 +50,9 @@ t_node	*newNode(char *fullpath)
 		return (NULL);
 	lstat(fullpath, &sb);
 	if (S_ISDIR(sb.st_mode))
-		node->isDir = true;
+		node->is_dir = true;
 	else
-		node->isDir = false;
+		node->is_dir = false;
 	node->fullpath = ft_strdup(fullpath);
 	node->left = NULL;
 	node->right = NULL;
@@ -87,7 +80,7 @@ void	insert(t_lsflags *store, t_node *tree, char *path)
 	{
 		if (!tree->left)
 		{
-			new = newNode(path);
+			new = new_node(path);
 			tree->left = new;
 		}
 		else
@@ -97,7 +90,7 @@ void	insert(t_lsflags *store, t_node *tree, char *path)
 	{
 		if (!tree->right)
 		{
-			new = newNode(path);
+			new = new_node(path);
 			tree->right = new;
 		}
 		else
