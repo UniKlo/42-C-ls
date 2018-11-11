@@ -6,11 +6,22 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 23:05:17 by khou              #+#    #+#             */
-/*   Updated: 2018/11/11 02:46:28 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/11 03:32:03 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
+
+void	p_dirsize(t_lsflags *store, t_ls *ls, int blksize)
+{
+	if (store->l)
+	{
+		if (store->a)
+			ft_printf("total %d\n", blksize);
+		else if (!store->a && ls->si > 2)
+			ft_printf("total %d\n", blksize);
+	}
+}
 
 void	read_dir(DIR *dr, t_lsflags *store, t_ls *ls, char *path)
 {
@@ -36,13 +47,7 @@ void	read_dir(DIR *dr, t_lsflags *store, t_ls *ls, char *path)
 		ls->si++;
 	}
 //	ft_printf("si: %d\n", ls->si);
-	if (store->l)
-	{
-		if (store->a)
-			ft_printf("total %d\n", blksize);
-		else if (!store->a && ls->si > 2)
-			ft_printf("total %d\n", blksize);
-	}
+	p_dirsize(store, ls, blksize);
 }
 
 void	open_dir(t_lsflags *store, char *path)
