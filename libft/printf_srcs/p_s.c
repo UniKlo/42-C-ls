@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 17:11:14 by khou              #+#    #+#             */
-/*   Updated: 2018/09/29 11:53:38 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/10 23:10:18 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	set_s(t_block *blk)
 			act.length = blk->p_dot;
 	}
 	if (blk->width && ft_strlen(s) > 0)
-		act.space = blk->width -act.length;
+		act.space = blk->width - act.length;
 	else
 		act.space = blk->width;
 	*blk->ret = *blk->ret + act.space;

@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 13:12:49 by khou              #+#    #+#             */
-/*   Updated: 2018/09/27 11:02:48 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/10 23:13:50 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <wchar.h>
 
 /*
-** ---------------------------- COLOR MACROS -------------------------------------
+** ---------------------------- COLOR MACROS -----------------------------------
 */
 
 # define KNRM  "\x1B[0m"
@@ -36,17 +36,19 @@
 # define KMAG  "\x1B[35m"
 # define KCYN  "\x1B[36m"
 # define KWHT  "\x1B[37m"
-# define BBLK  "\033[1m\033[30m"      /* Bold Black */
-# define BRED  "\033[1m\033[31m"      /* Bold Red */
-# define BGRN  "\033[1m\033[32m"      /* Bold Green */
-# define BYEL  "\033[1m\033[33m"      /* Bold Yellow */
-# define BBLU  "\033[1m\033[34m"      /* Bold Blue */
-# define BMAG  "\033[1m\033[35m"      /* Bold Magenta */
-# define BCYN  "\033[1m\033[36m"      /* Bold Cyan */
-# define BWHT  "\033[1m\033[37m"      /* Bold White */
+# define BBLK  "\033[1m\033[30m"
+# define BRED  "\033[1m\033[31m"
+# define BGRN  "\033[1m\033[32m"
+# define BYEL  "\033[1m\033[33m"
+# define BBLU  "\033[1m\033[34m"
+# define BMAG  "\033[1m\033[35m"
+# define BCYN  "\033[1m\033[36m"
+# define BWHT  "\033[1m\033[37m"
+
 /*
 ** ------------------------- Structure Definition ------------------------------
 */
+
 typedef struct	s_print
 {
 	char		*format;

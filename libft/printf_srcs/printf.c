@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/15 20:20:45 by khou              #+#    #+#             */
-/*   Updated: 2018/09/29 11:54:14 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/10 23:09:02 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@ void	sort(t_print *all, int *i)
 {
 	t_block		blk;
 	t_fun_tbl	f;
-	int		new;
-	
+	int			new;
+
 	new = *i;
 	establish(all, &blk);
 	grab_flag(&blk, all->format, i);
 	if (!blk.specifier)
 	{
 		if (ft_isalpha(all->format[new + 1]))
-			*i =  new + 1;
+			*i = new + 1;
 		else
 			*i = new;
-		return;
+		return ;
 	}
 	f = dispatch_table(blk.specifier);
 	if (f != NULL)
