@@ -27,7 +27,8 @@ SOURCES = main.c \
 		plong.c\
 		cmd_arg.c\
 		btree_sort.c\
-		openDir.c\
+		open_dir.c\
+		sub_sort.c\
 		free.c\
 
 

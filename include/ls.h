@@ -83,6 +83,7 @@ void				operate(t_lsflags *store, char *path);
 void				ls_init(t_ls *ls);
 void				flag_init(t_lsflags *store);
 void				cmd_sort(t_lsflags *store, t_ls *ls);
+void				sub_sort(t_lsflags *store, t_ls *ls);
 t_node				*new_node(char *fullpath);
 void				insert(t_lsflags *store, t_node *tree, char *path);
 void				open_dir(t_lsflags *store, char *path);
