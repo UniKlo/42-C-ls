@@ -23,6 +23,7 @@ DIR_O = obj
 HEADER = -I include
 
 SOURCES = main.c \
+		ls_init.c\
 		plong.c\
 		cmd_arg.c\
 		btree_sort.c\
