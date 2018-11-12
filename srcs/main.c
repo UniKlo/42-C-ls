@@ -6,19 +6,27 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:55:09 by khou              #+#    #+#             */
-/*   Updated: 2018/11/11 20:54:22 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/12 01:56:54 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
-static void	ls_grab_flag(char *flags, t_lsflags *store)
+int 	ls_grab_flag(char flags, t_lsflags *store)
 {
-	store->R == 1 || ft_strchr(flags, 'R') ? store->R = true : false;
-	store->a == 1 || ft_strchr(flags, 'a') ? store->a = true : false;
-	store->t == 1 || ft_strchr(flags, 't') ? store->t = true : false;
-	store->r == 1 || ft_strchr(flags, 'r') ? store->r = true : false;
-	store->l == 1 || ft_strchr(flags, 'l') ? store->l = true : false;
+	if (store->R == 1 || flags == 'R')
+		store->R = true;
+	else if (store->a == 1 || flags == 'a')
+		store->a = true;
+	else if (store->t == 1 || flags == 't')
+		store->t = true;
+	else if (store->r == 1 || flags == 'r')
+		store->r = true;
+	else if (store->l == 1 || flags == 'l')
+		store->l = true;
+	else
+		return (-1);
+	return (1);
 }
 
 void		f_or_d(t_ls *ls, char *path)
@@ -45,7 +53,7 @@ void		f_or_d(t_ls *ls, char *path)
 	}
 }
 
-void		cmd_arg(char **argv, t_lsflags *store, t_ls *ls)
+int		cmd_arg(char **argv, t_lsflags *store, t_ls *ls)
 {
 	int i;
 
@@ -54,7 +62,15 @@ void		cmd_arg(char **argv, t_lsflags *store, t_ls *ls)
 	{
 		if (!argv[i][1])
 			ft_printf("ls: -: No such file or directory\n");
-		ls_grab_flag(++argv[i], store);
+		while(*(++argv[i]))
+			if (ls_grab_flag(*argv[i], store) < 0)
+			{
+				ft_printf("ls: illegal option -- %c\nusage: ls [lRart] [file ...]\n",
+						  *argv[i]);
+				return (1);
+			}
+		
+		// ls_grab_flag(++argv[i], store);
 		i++;
 	}
 	while (argv[i])
@@ -68,6 +84,7 @@ void		cmd_arg(char **argv, t_lsflags *store, t_ls *ls)
 			ft_printf("ls: %s: No such file or directory\n", argv[i]);
 		i++;
 	}
+	return (0);
 }
 
 int			main(int argc, char **argv)
@@ -80,7 +97,8 @@ int			main(int argc, char **argv)
 	g_free.ri = 0;
 	flag_init(&store);
 	ls_init(&ls);
-	cmd_arg(argv, &store, &ls);
+	if (cmd_arg(argv, &store, &ls))
+		return (0);
 	if (store.current)
 	{
 		f_or_d(&ls, "./");
