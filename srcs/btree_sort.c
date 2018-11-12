@@ -41,7 +41,7 @@ int		ls_timecmp(const char *path1, const char *path2)
 	return (ret);
 }
 
-t_node	*new_node(char *fullpath)
+t_node	*new_node(char *fullpath, t_width *wid)
 {
 	t_node		*node;
 	struct stat sb;
@@ -56,6 +56,7 @@ t_node	*new_node(char *fullpath)
 	node->fullpath = ft_strdup(fullpath);
 	node->left = NULL;
 	node->right = NULL;
+	max_wid(sb, wid);
 	return (node);
 }
 
@@ -70,7 +71,7 @@ ls_cmp	ls_dispatch(t_lsflags *store)
 	return (f);
 }
 
-void	insert(t_lsflags *store, t_node *tree, char *path)
+void	insert(t_lsflags *store, t_node *tree, char *path, t_width *wid)
 {
 	t_node	*new;
 	ls_cmp	cmp;
@@ -80,20 +81,20 @@ void	insert(t_lsflags *store, t_node *tree, char *path)
 	{
 		if (!tree->left)
 		{
-			new = new_node(path);
+			new = new_node(path, wid);
 			tree->left = new;
 		}
 		else
-			insert(store, tree->left, path);
+			insert(store, tree->left, path, wid);
 	}
 	else
 	{
 		if (!tree->right)
 		{
-			new = new_node(path);
+			new = new_node(path, wid);
 			tree->right = new;
 		}
 		else
-			insert(store, tree->right, path);
+			insert(store, tree->right, path, wid);
 	}
 }

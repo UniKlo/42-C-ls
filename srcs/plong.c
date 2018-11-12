@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 13:45:49 by khou              #+#    #+#             */
-/*   Updated: 2018/11/11 01:46:56 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/11 05:44:41 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,34 @@ char	*fPermission(t_lsflags *store, int n)
 **perm [10] '@'extended arthributes
 */
 
-void	ls_fmt(t_lsflags *store, t_node *tree)
+void	p_width(int w, char *name)
+{
+	int	l;
+
+	l = ft_strlen(name);
+	ft_printf("%s", name);
+	l = w - l + 1;
+	while (l)
+	{
+		write(1, " ", 1);
+		l--;
+	}
+}
+
+void	p_lnkwidth(int w, int lnk)
+{
+	int	l;
+
+	l = w - ft_nbrlen(lnk);
+	while (l > 0)
+	{
+		write(1, " ", 1);
+		l--;
+	}	
+	ft_printf("%d", lnk);
+}
+
+void	ls_fmt(t_lsflags *store, t_width *wid, t_node *tree)
 {
 	struct stat		sb;
 	struct passwd	*p;
@@ -83,19 +110,16 @@ void	ls_fmt(t_lsflags *store, t_node *tree)
 	permission = fPermission(store, sb.st_mode);
 	if (store->l)
 	{
-		ft_printf("%ld", (long)sb.st_nlink);
+		p_lnkwidth(wid->w_lnk, sb.st_nlink);
 		ft_printf(" ");
-		if ((p = getpwuid(sb.st_uid)) == NULL)
-			perror("getpwuid() error\n");
-		else
-			ft_printf("%s  ", p->pw_name);
-		if ((grp = getgrgid(sb.st_gid)) == NULL)
-			perror("getgrgid() error\n");
-		else
-			ft_printf("%s", grp->gr_name);
+		p = getpwuid(sb.st_uid);
+		p_width(wid->w_uid, p->pw_name);
+		ft_printf(" ");
+		grp = getgrgid(sb.st_gid);
+		p_width(wid->w_gid, grp->gr_name);
 		ft_printf(" ");
 		if (S_ISCHR(sb.st_mode) || S_ISBLK(sb.st_mode))
-			ft_printf("%10d, %d", major(sb.st_rdev), minor(sb.st_rdev));
+			ft_printf("%3d, %3d", major(sb.st_rdev), minor(sb.st_rdev));//3
 		else
 			ft_printf("%8lld", (long long)sb.st_size);
 		ft_printf(" ");

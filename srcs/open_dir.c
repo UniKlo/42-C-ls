@@ -6,11 +6,34 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 23:05:17 by khou              #+#    #+#             */
-/*   Updated: 2018/11/11 03:32:03 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/11 20:34:34 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
+
+void	max_wid(struct stat sb, t_width *wid)
+{
+	struct passwd	*p;
+	struct group	*grp;
+	int				l;
+
+	l = ft_nbrlen((int)sb.st_nlink);
+	if (wid->w_lnk < l)
+		wid->w_lnk = l;
+	if ((p = getpwuid(sb.st_uid)) == NULL)
+		perror("getpwuid() error\n");
+	else
+		l = ft_strlen(p->pw_name);
+		if (wid->w_uid < l)
+			wid->w_uid = l;
+	if ((grp = getgrgid(sb.st_gid)) == NULL)
+		perror("getgrgid() error\n");
+	else
+		l = ft_strlen(grp->gr_name);
+		if (wid->w_gid < l)
+			wid->w_gid = l;
+}
 
 void	p_dirsize(t_lsflags *store, t_ls *ls, int blksize)
 {
@@ -23,6 +46,7 @@ void	p_dirsize(t_lsflags *store, t_ls *ls, int blksize)
 	}
 }
 
+//void	read_dir(DIR *dr, t_lsflags *store, t_ls *ls, t_width *wid, char *path)
 void	read_dir(DIR *dr, t_lsflags *store, t_ls *ls, char *path)
 {
 	struct dirent	*file;
@@ -43,10 +67,10 @@ void	read_dir(DIR *dr, t_lsflags *store, t_ls *ls, char *path)
 			else
 				lstat(ls->sub[ls->si], &sb);
 			blksize += sb.st_blocks;
+			// max_wid(sb, wid);//?
 		}
 		ls->si++;
 	}
-//	ft_printf("si: %d\n", ls->si);
 	p_dirsize(store, ls, blksize);
 }
 
@@ -56,6 +80,7 @@ void	open_dir(t_lsflags *store, char *path)
 	DIR				*dr;
 	char			*fname;
 	int				b;
+//	t_width			wid;
 
 	dr = opendir(path);
 	if (dr == NULL)
@@ -65,9 +90,12 @@ void	open_dir(t_lsflags *store, char *path)
 		return ;
 	}
 	ls_init(&ls);
+//	wid_init(&wid);
+	//read_dir(dr, store, &ls, &wid, path);
 	read_dir(dr, store, &ls, path);
 	b = 0;
-	sub_sort(store, &ls);
+	sub_sort(store, &ls);//?
+	
 	while (b < ls.si)
 	{
 		free(ls.sub[b]);

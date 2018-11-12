@@ -6,7 +6,7 @@
 #    By: khou <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/22 18:08:35 by khou              #+#    #+#              #
-#    Updated: 2018/11/09 03:23:00 by khou             ###   ########.fr        #
+#    Updated: 2018/11/11 20:31:15 by khou             ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -25,7 +25,7 @@ HEADER = -I include
 SOURCES = main.c \
 		ls_init.c\
 		plong.c\
-		cmd_arg.c\
+		cmd_sort.c\
 		btree_sort.c\
 		open_dir.c\
 		sub_sort.c\

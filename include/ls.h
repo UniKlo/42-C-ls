@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:59:53 by khou              #+#    #+#             */
-/*   Updated: 2018/11/11 01:50:17 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/11 20:51:35 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,14 @@ typedef struct		s_ls
 	int				si;
 }					t_ls;
 
+typedef struct		s_width
+{
+	int				w_lnk;
+	int				w_uid;
+	int				w_gid;
+	int				w_siz;		
+}					t_width;
+
 typedef struct		s_free
 {
 	t_node			*root[LS_SIZE];
@@ -82,16 +90,18 @@ typedef int	(*ls_cmp)(const char *path1, const char *path2);
 void				operate(t_lsflags *store, char *path);
 void				ls_init(t_ls *ls);
 void				flag_init(t_lsflags *store);
+void				wid_init(t_width *wid);
 void				cmd_sort(t_lsflags *store, t_ls *ls);
 void				sub_sort(t_lsflags *store, t_ls *ls);
-t_node				*new_node(char *fullpath);
-void				insert(t_lsflags *store, t_node *tree, char *path);
+void    max_wid(struct stat sb, t_width *wid);
+t_node				*new_node(char *fullpath, t_width *wid);
+void				insert(t_lsflags *store, t_node *tree, char *path, t_width *wid);
 void				open_dir(t_lsflags *store, char *path);
-void				print_tree(t_lsflags *store, t_node *tree);
+void				print_tree(t_lsflags *store, t_node *tree, t_width *wid);
 ls_cmp				ls_dispatch(t_lsflags *store);
 int					ls_timecmp(const char *path1, const char *path2);
-void				p_cmd(t_lsflags *store, t_node *tree);
-void				ls_fmt(t_lsflags *store, t_node *tree);
+void				p_cmd(t_lsflags *store, t_node *tree, t_width *wid);
+void				ls_fmt(t_lsflags *store, t_width *wid, t_node *tree);
 void				p_fname(char c, char *path);
 void				free_tree(t_node *tree);
 #endif

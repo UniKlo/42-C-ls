@@ -6,64 +6,64 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 03:12:04 by khou              #+#    #+#             */
-/*   Updated: 2018/11/11 03:27:51 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/11 20:50:30 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
-void	print_node(t_lsflags *store, t_node *tree)
+void	print_node(t_lsflags *store, t_width *wid, t_node *tree)
 {
 	if (!store->a && ft_strstr(tree->fullpath, "/."))
 		return ;
-	ls_fmt(store, tree);
+	ls_fmt(store, wid, tree);
 }
 
-void	print_sub(t_lsflags *store, t_node *tree)
+void	print_sub(t_lsflags *store, t_width *wid, t_node *tree)
 {
 	if (store->r != 1)
 	{
 		if (tree->left)
-			print_sub(store, tree->left);
-		print_node(store, tree);
+			print_sub(store, wid, tree->left);
+		print_node(store, wid, tree);
 		if (tree->right)
-			print_sub(store, tree->right);
+			print_sub(store, wid, tree->right);
 	}
 	else
 	{
 		if (tree->right)
-			print_sub(store, tree->right);
-		print_node(store, tree);
+			print_sub(store, wid, tree->right);
+		print_node(store, wid, tree);
 		if (tree->left)
-			print_sub(store, tree->left);
+			print_sub(store, wid, tree->left);
 	}
 }
 
-void	r_print(t_lsflags *store, t_node *tree)
+void	r_open(t_lsflags *store, t_node *tree)
 {
 	if (store->r != 1)
 	{
 		if (tree->left)
-			r_print(store, tree->left);
+			r_open(store, tree->left);
 		if (!ft_strstr(tree->fullpath, "/."))
 		{
 			store->current = false;
-			p_cmd(store, tree);
+			p_cmd(store, tree, NULL);
 		}
 		if (tree->right)
-			r_print(store, tree->right);
+			r_open(store, tree->right);
 	}
 	else
 	{
 		if (tree->right)
-			r_print(store, tree->right);
+			r_open(store, tree->right);
 		if (!ft_strstr(tree->fullpath, "/."))
 		{
 			store->current = false;
-			p_cmd(store, tree);
+			p_cmd(store, tree, NULL);
 		}
 		if (tree->left)
-			r_print(store, tree->left);
+			r_open(store, tree->left);
 	}
 }
 
@@ -71,17 +71,20 @@ void	sub_sort(t_lsflags *store, t_ls *ls)
 {
 	t_node	*tree;
 	int		a;
+	t_width	wid;
 
-	tree = new_node(ls->sub[0]);
+	wid_init(&wid);
+	tree = new_node(ls->sub[0], &wid);
 	a = 1;
 	while (a < ls->si)
 	{
-		insert(store, tree, ls->sub[a]);
+		insert(store, tree, ls->sub[a], &wid);
 		a++;
 	}
-	print_sub(store, tree);
+	ft_printf("w_lnk: %d, w_uid: %d, w_gid: %d\n", wid.w_lnk, wid.w_uid, wid.w_gid);
+	print_sub(store, &wid, tree);
 	if (store->R)
-		r_print(store, tree);
+		r_open(store, tree);
 	g_free.root[g_free.ri] = tree;
 	g_free.ri++;
 }

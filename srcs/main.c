@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:55:09 by khou              #+#    #+#             */
-/*   Updated: 2018/11/11 02:10:24 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/11 20:54:22 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	ls_grab_flag(char *flags, t_lsflags *store)
 	store->l == 1 || ft_strchr(flags, 'l') ? store->l = true : false;
 }
 
-void	f_or_d(t_ls *ls, char *path)
+void		f_or_d(t_ls *ls, char *path)
 {
 	struct stat thing;
 
@@ -45,7 +45,7 @@ void	f_or_d(t_ls *ls, char *path)
 	}
 }
 
-void	cmd_arg(char **argv, t_lsflags *store, t_ls *ls)
+void		cmd_arg(char **argv, t_lsflags *store, t_ls *ls)
 {
 	int i;
 
@@ -96,5 +96,6 @@ int			main(int argc, char **argv)
 		free_tree(g_free.root[b]);
 		b--;
 	}
+//	while (1);
 	return (0);
 }
