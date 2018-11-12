@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 23:05:17 by khou              #+#    #+#             */
-/*   Updated: 2018/11/11 20:34:34 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/11 23:29:43 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ void	max_wid(struct stat sb, t_width *wid)
 		l = ft_strlen(grp->gr_name);
 		if (wid->w_gid < l)
 			wid->w_gid = l;
+	l = ft_nbrlen((int)sb.st_size);
+	if (wid->w_siz < l)
+		wid->w_siz = l;
 }
 
 void	p_dirsize(t_lsflags *store, t_ls *ls, int blksize)
@@ -46,7 +49,6 @@ void	p_dirsize(t_lsflags *store, t_ls *ls, int blksize)
 	}
 }
 
-//void	read_dir(DIR *dr, t_lsflags *store, t_ls *ls, t_width *wid, char *path)
 void	read_dir(DIR *dr, t_lsflags *store, t_ls *ls, char *path)
 {
 	struct dirent	*file;
@@ -65,9 +67,10 @@ void	read_dir(DIR *dr, t_lsflags *store, t_ls *ls, char *path)
 			if (!store->a && ft_strstr(ls->sub[ls->si], "/."))
 				;
 			else
+			{
 				lstat(ls->sub[ls->si], &sb);
-			blksize += sb.st_blocks;
-			// max_wid(sb, wid);//?
+				blksize += sb.st_blocks;
+			}
 		}
 		ls->si++;
 	}
@@ -94,8 +97,7 @@ void	open_dir(t_lsflags *store, char *path)
 	//read_dir(dr, store, &ls, &wid, path);
 	read_dir(dr, store, &ls, path);
 	b = 0;
-	sub_sort(store, &ls);//?
-	
+	sub_sort(store, &ls);
 	while (b < ls.si)
 	{
 		free(ls.sub[b]);

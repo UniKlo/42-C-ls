@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 03:12:04 by khou              #+#    #+#             */
-/*   Updated: 2018/11/11 20:50:30 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/11 20:56:46 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	sub_sort(t_lsflags *store, t_ls *ls)
 		insert(store, tree, ls->sub[a], &wid);
 		a++;
 	}
-	ft_printf("w_lnk: %d, w_uid: %d, w_gid: %d\n", wid.w_lnk, wid.w_uid, wid.w_gid);
+//	ft_printf("w_lnk: %d, w_uid: %d, w_gid: %d\n", wid.w_lnk, wid.w_uid, wid.w_gid);
 	print_sub(store, &wid, tree);
 	if (store->R)
 		r_open(store, tree);

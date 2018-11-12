@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 13:45:49 by khou              #+#    #+#             */
-/*   Updated: 2018/11/11 05:44:41 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/11 23:22:47 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,14 @@ void	p_width(int w, char *name)
 	}
 }
 
-void	p_lnkwidth(int w, int lnk)
+void	p_nbrwidth(int w, int lnk)
 {
 	int	l;
 
-	l = w - ft_nbrlen(lnk);
+	if (lnk == 0)
+		l = w - 1;
+	else
+		l = w - ft_nbrlen(lnk);
 	while (l > 0)
 	{
 		write(1, " ", 1);
@@ -110,7 +113,7 @@ void	ls_fmt(t_lsflags *store, t_width *wid, t_node *tree)
 	permission = fPermission(store, sb.st_mode);
 	if (store->l)
 	{
-		p_lnkwidth(wid->w_lnk, sb.st_nlink);
+		p_nbrwidth(wid->w_lnk, sb.st_nlink);
 		ft_printf(" ");
 		p = getpwuid(sb.st_uid);
 		p_width(wid->w_uid, p->pw_name);
@@ -119,9 +122,9 @@ void	ls_fmt(t_lsflags *store, t_width *wid, t_node *tree)
 		p_width(wid->w_gid, grp->gr_name);
 		ft_printf(" ");
 		if (S_ISCHR(sb.st_mode) || S_ISBLK(sb.st_mode))
-			ft_printf("%3d, %3d", major(sb.st_rdev), minor(sb.st_rdev));//3
+			ft_printf("%3d, %3d", major(sb.st_rdev), minor(sb.st_rdev));
 		else
-			ft_printf("%8lld", (long long)sb.st_size);
+			p_nbrwidth(wid->w_siz, sb.st_size);
 		ft_printf(" ");
 		ft_printf("%.6s ", ctime(&sb.st_mtime) + 4);
 		ft_printf("%.5s ", ctime(&sb.st_mtime) + 11);
@@ -143,6 +146,9 @@ void	p_fname(char c, char *path)
 	else if (c == 'l')
 	{
 		color = KMAG;
+//		ft_printf("l path: %s\n", path);
+		path = ft_strjoin(path, "/");
+//		ft_printf("l path: %s\n", path);
 		ret = readlink(path, bypath, BUF_SIZE);
 		ft_printf("readlink buff: %ld\n", ret);
 		ft_printf("bypath: %s\n", bypath);
