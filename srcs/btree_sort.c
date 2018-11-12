@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 21:49:20 by khou              #+#    #+#             */
-/*   Updated: 2018/11/11 01:44:10 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/12 01:12:10 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int		ls_timecmp(const char *path1, const char *path2)
 	struct stat		sb2;
 	int				ret;
 
-	lstat(path1, &sb1) && lstat(path2, &sb2);
+	lstat(path1, &sb1);
+	lstat(path2, &sb2);
 	ret = 0;
 	if (sb1.st_mtimespec.tv_sec == sb2.st_mtimespec.tv_sec)
 	{
@@ -26,13 +27,9 @@ int		ls_timecmp(const char *path1, const char *path2)
 		{
 			if (ft_strcmp(path1, path2) > 0)
 				ret = 1;
-			else
-				ret = -1;
 		}
 		else if (sb1.st_mtimespec.tv_nsec < sb2.st_mtimespec.tv_nsec)
 			ret = 1;
-		else
-			ret = -1;
 	}
 	else if (sb1.st_mtimespec.tv_sec < sb2.st_mtimespec.tv_sec)
 		ret = 1;
