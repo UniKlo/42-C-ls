@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:55:09 by khou              #+#    #+#             */
-/*   Updated: 2018/11/12 01:56:54 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/12 22:35:59 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 int 	ls_grab_flag(char flags, t_lsflags *store)
 {
-	if (store->R == 1 || flags == 'R')
+	if (flags == 'R')
 		store->R = true;
-	else if (store->a == 1 || flags == 'a')
+	else if (flags == 'a')
 		store->a = true;
-	else if (store->t == 1 || flags == 't')
+	else if (flags == 't')
 		store->t = true;
-	else if (store->r == 1 || flags == 'r')
+	else if (flags == 'r')
 		store->r = true;
-	else if (store->l == 1 || flags == 'l')
+	else if (flags == 'l')
 		store->l = true;
 	else
 		return (-1);
@@ -42,14 +42,10 @@ void		f_or_d(t_ls *ls, char *path)
 	if (S_ISDIR(thing.st_mode))
 	{
 		ls->dir[ls->di++] = path;
-//		ft_printf("%d, ", S_is_dir(thing.st_mode));
-//		ft_printf("%s is a DIR\n", path);
 	}
 	else
 	{
 		ls->fil[ls->fi++] = path;
-//		ft_printf("%d, ", S_is_dir(thing.st_mode));
-//		ft_printf("%s is a FIL\n", path);
 	}
 }
 
@@ -63,16 +59,17 @@ int		cmd_arg(char **argv, t_lsflags *store, t_ls *ls)
 		if (!argv[i][1])
 			ft_printf("ls: -: No such file or directory\n");
 		while(*(++argv[i]))
+		{
 			if (ls_grab_flag(*argv[i], store) < 0)
 			{
 				ft_printf("ls: illegal option -- %c\nusage: ls [lRart] [file ...]\n",
 						  *argv[i]);
 				return (1);
 			}
-		
-		// ls_grab_flag(++argv[i], store);
+		}
 		i++;
 	}
+	
 	while (argv[i])
 	{
 		if (argv[i][0] != '-')

@@ -6,7 +6,7 @@
 #    By: khou <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/22 18:08:35 by khou              #+#    #+#              #
-#    Updated: 2018/11/11 20:31:15 by khou             ###   ########.fr        #
+#    Updated: 2018/11/12 22:25:16 by khou             ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -14,7 +14,7 @@ C = clang
 
 NAME = ft_ls
 
-FLAGS = -Wall -Wextra -Werror #-fsanitize=address #-g
+FLAGS = -Wall -Wextra -Werror #-g
 
 DIR_S = srcs
 
