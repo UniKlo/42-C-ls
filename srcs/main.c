@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:55:09 by khou              #+#    #+#             */
-/*   Updated: 2018/11/12 22:35:59 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/12 23:00:48 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ int 	ls_grab_flag(char flags, t_lsflags *store)
 void		f_or_d(t_ls *ls, char *path)
 {
 	struct stat thing;
-
-	lstat(path, &thing);
-	if (!thing.st_nlink)
+	int exist = 0;
+	
+	exist = lstat(path, &thing);
+	if (exist < 0)
 	{
 		ft_printf("ls: %s: No such file or directory\n", path);
 		return ;
