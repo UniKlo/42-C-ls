@@ -14,7 +14,7 @@
 
 void		flag_init(t_lsflags *store)
 {
-	store->R = 0;
+	store->rec = 0;
 	store->a = 0;
 	store->t = 0;
 	store->r = 0;

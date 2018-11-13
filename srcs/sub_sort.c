@@ -83,7 +83,7 @@ void	sub_sort(t_lsflags *store, t_ls *ls)
 	}
 //	ft_printf("w_lnk: %d, w_uid: %d, w_gid: %d\n", wid.w_lnk, wid.w_uid, wid.w_gid);
 	print_sub(store, &wid, tree);
-	if (store->R)
+	if (store->rec)
 		r_open(store, tree);
 	g_free.root[g_free.ri] = tree;
 	g_free.ri++;

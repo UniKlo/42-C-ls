@@ -6,13 +6,13 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 13:45:49 by khou              #+#    #+#             */
-/*   Updated: 2018/11/13 01:22:41 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/13 02:27:18 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
-char	fType(int n)
+char	f_type(int n)
 {
 	char c;
 
@@ -36,12 +36,12 @@ char	fType(int n)
 	return (c);
 }
 
-char	*fPermission(t_lsflags *store, int n)
+char	*f_permission(int n)
 {
 	char	*perm;
 
 	perm = ft_strnew(11);
-	perm[0] = fType(n & S_IFMT);
+	perm[0] = f_type(n & S_IFMT);
 	perm[1] = (n & S_IRUSR) ? 'r' : '-';
 	perm[2] = (n & S_IWUSR) ? 'w' : '-';
 	if (n & S_IXUSR)
@@ -62,8 +62,6 @@ char	*fPermission(t_lsflags *store, int n)
 		perm[9] = (n & S_ISVTX) ? 'T' : '-';
 	perm[10] = ' ';
 	perm[11] = '\0';
-	if (store->l)
-		ft_printf("%s ", perm);
 	return (perm);
 }
 
@@ -76,7 +74,7 @@ void	p_width(int w, char *name)
 	int	l;
 
 	l = ft_strlen(name);
-	ft_printf("%s", name);
+	ft_printf(" %s", name);
 	l = w - l + 1;
 	while (l)
 	{
@@ -97,7 +95,7 @@ void	p_nbrwidth(int w, int lnk)
 	{
 		write(1, " ", 1);
 		l--;
-	}	
+	}
 	ft_printf("%d", lnk);
 }
 
@@ -108,16 +106,14 @@ void	ls_fmt(t_lsflags *store, t_width *wid, t_node *tree)
 	struct group	*grp;
 	char			*permission;
 
-	permission = NULL;
 	lstat(tree->fullpath, &sb);
-	permission = fPermission(store, sb.st_mode);
+	permission = f_permission(sb.st_mode);
 	if (store->l)
 	{
+		ft_printf("%s", permission);
 		p_nbrwidth(wid->w_lnk, sb.st_nlink);
-		ft_printf(" ");
 		p = getpwuid(sb.st_uid);
 		p_width(wid->w_uid, p->pw_name);
-		ft_printf(" ");
 		grp = getgrgid(sb.st_gid);
 		p_width(wid->w_gid, grp->gr_name);
 		ft_printf(" ");
@@ -125,46 +121,9 @@ void	ls_fmt(t_lsflags *store, t_width *wid, t_node *tree)
 			ft_printf("%3d, %3d", major(sb.st_rdev), minor(sb.st_rdev));
 		else
 			p_nbrwidth(wid->w_siz, sb.st_size);
-		ft_printf(" ");
-		ft_printf("%.6s ", ctime(&sb.st_mtime) + 4);
+		ft_printf(" %.6s ", ctime(&sb.st_mtime) + 4);
 		ft_printf("%.5s ", ctime(&sb.st_mtime) + 11);
 	}
 	p_fname(store, permission[0], tree->fullpath);
 	free(permission);
-}
-
-void	p_fname(t_lsflags *store, char c, char *path)
-{
-	char	*fname;
-	char	*color;
-//	ssize_t	ret;
-	char	*bypath;
-
-	bypath = NULL;
-	if (c == 'd')
-		color = BCYN;
-	else if (c == 'l')
-	{
-		color = KMAG;
-//		ft_printf("l path: %s\n", path);
-//		path = ft_strjoin("/", path);
-//		ft_printf("l path: %s\n", path);
-//		ret = readlink(path, bypath, BUF_SIZE);
-//		ft_printf("readlink buff: %ld\n", ret);
-//		ft_printf("bypath: %s\n", bypath);
-	}
-	else if (c == 's')
-		color = KGRN;
-	else if (c == 'p')
-		color = KYEL;
-	else
-		color = KNRM;
-	if ((fname = ft_strrchr(path, '/')))
-	{
-		ft_printf("%s%s%s", color, ++fname, KNRM);
-		c == 'l' && store->l ? ft_printf("->") : 0 ;
-	}
-	else
-		ft_printf("%s%s", color, path, KNRM);
-	ft_printf("\n");
 }

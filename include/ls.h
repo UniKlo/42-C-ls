@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:59:53 by khou              #+#    #+#             */
-/*   Updated: 2018/11/13 01:21:26 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/13 01:31:38 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct		s_node
 
 typedef struct		s_lsflags
 {
-	bool			R;
+	bool			rec;
 	bool			a;
 	bool			t;
 	bool			r;
@@ -69,7 +69,7 @@ typedef struct		s_width
 	int				w_lnk;
 	int				w_uid;
 	int				w_gid;
-	int				w_siz;		
+	int				w_siz;
 }					t_width;
 
 typedef struct		s_free
@@ -80,7 +80,7 @@ typedef struct		s_free
 
 t_free g_free;
 
-typedef int	(*ls_cmp)(const char *path1, const char *path2);
+typedef int			(*ls_cmp)(const char *path1, const char *path2);
 
 /*
 ** -----------------------------------------------------------------------------
@@ -93,9 +93,10 @@ void				flag_init(t_lsflags *store);
 void				wid_init(t_width *wid);
 void				cmd_sort(t_lsflags *store, t_ls *ls);
 void				sub_sort(t_lsflags *store, t_ls *ls);
-void    max_wid(struct stat sb, t_width *wid);
+void				max_wid(struct stat sb, t_width *wid);
 t_node				*new_node(char *fullpath, t_width *wid);
-void				insert(t_lsflags *store, t_node *tree, char *path, t_width *wid);
+void				insert(t_lsflags *store, t_node *tree, \
+						char *path, t_width *wid);
 void				open_dir(t_lsflags *store, char *path);
 void				print_tree(t_lsflags *store, t_node *tree, t_width *wid);
 ls_cmp				ls_dispatch(t_lsflags *store);

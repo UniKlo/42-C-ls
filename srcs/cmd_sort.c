@@ -6,17 +6,17 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 06:11:25 by khou              #+#    #+#             */
-/*   Updated: 2018/11/11 20:47:19 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/13 01:58:36 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
-void	p_cmd(t_lsflags *store, t_node *tree, t_width *wid)//open dir, and print the file
+void	p_cmd(t_lsflags *store, t_node *tree, t_width *wid)
 {
 	if (!tree->is_dir)
 	{
-		if (store->R)
+		if (store->rec)
 			return ;
 		ls_fmt(store, wid, tree);
 	}

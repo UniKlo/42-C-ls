@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 23:05:17 by khou              #+#    #+#             */
-/*   Updated: 2018/11/11 23:29:43 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/13 02:01:38 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ void	max_wid(struct stat sb, t_width *wid)
 		perror("getpwuid() error\n");
 	else
 		l = ft_strlen(p->pw_name);
-		if (wid->w_uid < l)
-			wid->w_uid = l;
+	if (wid->w_uid < l)
+		wid->w_uid = l;
 	if ((grp = getgrgid(sb.st_gid)) == NULL)
 		perror("getgrgid() error\n");
 	else
 		l = ft_strlen(grp->gr_name);
-		if (wid->w_gid < l)
-			wid->w_gid = l;
+	if (wid->w_gid < l)
+		wid->w_gid = l;
 	l = ft_nbrlen((int)sb.st_size);
 	if (wid->w_siz < l)
 		wid->w_siz = l;
@@ -83,7 +83,6 @@ void	open_dir(t_lsflags *store, char *path)
 	DIR				*dr;
 	char			*fname;
 	int				b;
-//	t_width			wid;
 
 	dr = opendir(path);
 	if (dr == NULL)
@@ -93,8 +92,6 @@ void	open_dir(t_lsflags *store, char *path)
 		return ;
 	}
 	ls_init(&ls);
-//	wid_init(&wid);
-	//read_dir(dr, store, &ls, &wid, path);
 	read_dir(dr, store, &ls, path);
 	b = 0;
 	sub_sort(store, &ls);
