@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 13:45:49 by khou              #+#    #+#             */
-/*   Updated: 2018/11/11 23:22:47 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/13 01:22:41 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,15 +129,15 @@ void	ls_fmt(t_lsflags *store, t_width *wid, t_node *tree)
 		ft_printf("%.6s ", ctime(&sb.st_mtime) + 4);
 		ft_printf("%.5s ", ctime(&sb.st_mtime) + 11);
 	}
-	p_fname(permission[0], tree->fullpath);
+	p_fname(store, permission[0], tree->fullpath);
 	free(permission);
 }
 
-void	p_fname(char c, char *path)
+void	p_fname(t_lsflags *store, char c, char *path)
 {
 	char	*fname;
 	char	*color;
-	ssize_t	ret;
+//	ssize_t	ret;
 	char	*bypath;
 
 	bypath = NULL;
@@ -147,11 +147,11 @@ void	p_fname(char c, char *path)
 	{
 		color = KMAG;
 //		ft_printf("l path: %s\n", path);
-		path = ft_strjoin(path, "/");
+//		path = ft_strjoin("/", path);
 //		ft_printf("l path: %s\n", path);
-		ret = readlink(path, bypath, BUF_SIZE);
-		ft_printf("readlink buff: %ld\n", ret);
-		ft_printf("bypath: %s\n", bypath);
+//		ret = readlink(path, bypath, BUF_SIZE);
+//		ft_printf("readlink buff: %ld\n", ret);
+//		ft_printf("bypath: %s\n", bypath);
 	}
 	else if (c == 's')
 		color = KGRN;
@@ -160,7 +160,11 @@ void	p_fname(char c, char *path)
 	else
 		color = KNRM;
 	if ((fname = ft_strrchr(path, '/')))
-		ft_printf("%s%s\n%s", color, ++fname, KNRM);
+	{
+		ft_printf("%s%s%s", color, ++fname, KNRM);
+		c == 'l' && store->l ? ft_printf("->") : 0 ;
+	}
 	else
-		ft_printf("%s%s\n", color, path, KNRM);
+		ft_printf("%s%s", color, path, KNRM);
+	ft_printf("\n");
 }

@@ -6,7 +6,7 @@
 /*   By: khou <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 23:59:53 by khou              #+#    #+#             */
-/*   Updated: 2018/11/11 22:33:37 by khou             ###   ########.fr       */
+/*   Updated: 2018/11/13 01:21:26 by khou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,6 @@ ls_cmp				ls_dispatch(t_lsflags *store);
 int					ls_timecmp(const char *path1, const char *path2);
 void				p_cmd(t_lsflags *store, t_node *tree, t_width *wid);
 void				ls_fmt(t_lsflags *store, t_width *wid, t_node *tree);
-void				p_fname(char c, char *path);
+void				p_fname(t_lsflags *store, char c, char *path);
 void				free_tree(t_node *tree);
 #endif
